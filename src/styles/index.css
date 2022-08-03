@@ -1,1 +1,62 @@
 @import '~antd/dist/antd.css';
+
+.header  {
+    padding: 0px 30px !important;
+    background: #76b961;
+    height: auto;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%),
+        0 3px 6px rgb(0 0 0 / 23%);
+}
+
+@media screen and (max-width: 425px) {
+    .header {
+        padding: 0px 15px !important;
+    }
+}
+
+.header-menu{
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    text-align: center;
+    border-bottom: none;
+}
+
+.header-menu-item{
+    text-transform: uppercase;
+    font-weight: 700;
+    color: rgba(0,0,0,.65);
+}
+
+
+.logo {
+    color: white;
+    font-size: 1.3rem;
+    padding: 0 1rem 0 0;
+}
+
+.ant-layout-content{
+    padding-top: 2.5rem;
+}
+
+.container{
+    padding: 0 30px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 0px 15px !important;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .container {
+        padding: 0px 10px !important;
+    }
+}
+
+
+
+
