@@ -14,9 +14,9 @@ const HeaderMobileMenu: React.FC = () => {
         style={{
           color: "white",
           padding: 8,
-          fontSize: "1.1rem",
+          fontSize: "1.2rem",
           border: "1px solid",
-          borderRadius: 3,
+          borderRadius: 2.5,
         }}
         onClick={() => setVisible(true)}
       />
@@ -24,15 +24,16 @@ const HeaderMobileMenu: React.FC = () => {
         width="60%"
         visible={visible}
         onClose={() => setVisible(false)}
-        closable={false}
+        closable
       >
-        <Menu style={{ border: 0 }}>
-          {MenuItems.map((item) => (
-            <Menu.Item key={item.key} onClick={() => navigate(item.path)}>
-              {item.label}
-            </Menu.Item>
-          ))}
-        </Menu>
+        <Menu
+          style={{ border: 0 }}
+          items={MenuItems}
+          onClick={({ key }) => {
+            setVisible(false);
+            navigate(key);
+          }}
+        ></Menu>
       </Drawer>
     </>
   );

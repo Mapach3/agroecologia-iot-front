@@ -1,0 +1,8 @@
+.ant-menu-item {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.ant-menu-item:hover {
+    color: #9791ae !important;
+}
