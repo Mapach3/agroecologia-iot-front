@@ -5,17 +5,12 @@ import { MenuItems } from "../helpers/menu-helpers";
 const HeaderMenu = () => {
   const navigate = useNavigate();
   return (
-    <Menu mode="horizontal" className="header-menu">
-      {MenuItems.map((item) => (
-        <Menu.Item
-          key={item.key}
-          onClick={() => navigate(item.path)}
-          className="header-menu-item"
-        >
-          {item.label}
-        </Menu.Item>
-      ))}
-    </Menu>
+    <Menu
+      mode="horizontal"
+      className="header-menu"
+      items={MenuItems}
+      onClick={({ key }) => navigate(key)}
+    ></Menu>
   );
 };
 

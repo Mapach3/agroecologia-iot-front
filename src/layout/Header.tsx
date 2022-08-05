@@ -8,17 +8,17 @@ const Header: React.FC = () => {
   return (
     <Layout.Header className="header">
       <div className="container">
-        <Row gutter={16} align="bottom">
+        <Row gutter={12} align="bottom">
           <Col xs={20} sm={10} md={7}>
             <div className="logo">Agroecología IoT</div>
           </Col>
-          <Col xs={0} sm={9} md={11}>
+          <Col xs={0} sm={10} md={12}>
             <HeaderMenu />
           </Col>
           <Col xs={4} sm={0} md={0} style={{ textAlign: "end" }}>
             <HeaderMobileMenu />
           </Col>
-          <Col xs={0} sm={5} md={6} style={{ textAlign: "end" }}>
+          <Col xs={0} sm={4} md={5} style={{ textAlign: "end" }}>
             <Avatar icon={<UserOutlined />} />
           </Col>
         </Row>
