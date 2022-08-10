@@ -18,7 +18,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "useUnknownInCatchVariables": false // errors in catch statements will be set to any instead of unknown
   },
   "include": [
     "src"
