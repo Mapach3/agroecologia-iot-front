@@ -3,31 +3,23 @@ import { RolesEnum } from "../api/roles/enum";
 import AuthorizedRoute from "../components/AuthorizedRoute/AuthorizedRoute";
 import { URLs } from "../config/enums";
 
-const UsersPage: React.FC = () => {
+const GardensPage: React.FC = () => {
   return (
     <Routes>
       <Route
         path={URLs.ROOT}
         element={
           <AuthorizedRoute roles={[RolesEnum.ADMIN]}>
-            <span>Grilla de usuarios</span>
-          </AuthorizedRoute>
-        }
-      />
-      <Route
-        path={URLs.NEW}
-        element={
-          <AuthorizedRoute roles={[RolesEnum.ADMIN]}>
-            <span>Nuevo usuario</span>
+            <span>Grilla de Huertas</span>
           </AuthorizedRoute>
         }
       />
 
       <Route
-        path={URLs.DETAIL}
+        path={URLs.NEW}
         element={
-          <AuthorizedRoute roles={[RolesEnum.ADMIN]}>
-            <span>Detalle de un usuario</span>
+          <AuthorizedRoute roles={[RolesEnum.GARDEN_MANAGER]}>
+            <span>TEST: Ruta solamente visible para GARDEN_MANAGER</span>
           </AuthorizedRoute>
         }
       />
@@ -35,4 +27,4 @@ const UsersPage: React.FC = () => {
   );
 };
 
-export default UsersPage;
+export default GardensPage;
