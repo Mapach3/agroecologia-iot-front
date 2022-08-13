@@ -1,10 +1,20 @@
-import { Card } from "antd";
+import { Route, Routes } from "react-router";
+import { RolesEnum } from "../api/roles/enum";
+import AuthorizedRoute from "../components/AuthorizedRoute/AuthorizedRoute";
+import { URLs } from "../config/enums";
 
 const RolesPage: React.FC = () => {
   return (
-    <div className="container">
-      <Card title="Roles">Componente de prueba</Card>
-    </div>
+    <Routes>
+      <Route
+        path={URLs.ROOT}
+        element={
+          <AuthorizedRoute roles={[RolesEnum.ADMIN]}>
+            <span>Grilla de Roles</span>
+          </AuthorizedRoute>
+        }
+      />
+    </Routes>
   );
 };
 
