@@ -1,5 +1,6 @@
 import { API } from "../../config/api";
 import {
+  LOCAL_STORAGE_EXPIRE,
   LOCAL_STORAGE_JWT,
   LOCAL_STORAGE_PROFILE,
 } from "../../config/general-config";
@@ -16,14 +17,32 @@ class AuthService {
       body: { username, password },
     });
 
-    const { token, profile } = response;
+    const { token, profile, expire } = response;
     localStorage.setItem(LOCAL_STORAGE_JWT, token);
+    if (expire) localStorage.setItem(LOCAL_STORAGE_EXPIRE, expire);
     AuthService.saveUserToLocalStorage(profile);
     return response;
   }
 
+  //Local Storage Helper Methods
   static saveUserToLocalStorage(profile: IProfile) {
     localStorage.setItem(LOCAL_STORAGE_PROFILE, JSON.stringify(profile));
+  }
+
+  static getUserProfile(): IProfile | undefined {
+    const jsonProfile = localStorage.getItem(LOCAL_STORAGE_PROFILE);
+    if (!jsonProfile) return undefined;
+    return JSON.parse(jsonProfile) as IProfile;
+  }
+
+  static getToken(): string | undefined {
+    const jwtToken = localStorage.getItem(LOCAL_STORAGE_JWT);
+    return jwtToken || undefined;
+  }
+
+  static getTokenExpire(): string | undefined {
+    const tokenExpire = localStorage.getItem(LOCAL_STORAGE_EXPIRE);
+    return tokenExpire || undefined;
   }
 }
 

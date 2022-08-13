@@ -1,9 +1,11 @@
 import { KeyOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Form, Input, message, Row } from "antd";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import AuthService from "../api/auth/AuthService";
 import { URLs } from "../config/enums";
+import { loginSuccessful } from "../redux/auth/authSlice";
 
 interface FormFields {
   username: string;
@@ -15,6 +17,8 @@ const LoginPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async () => {
     try {
       setIsSubmitting(true);
@@ -23,8 +27,8 @@ const LoginPage: React.FC = () => {
         values.username,
         values.password
       );
+      dispatch(loginSuccessful(response));
       navigate(URLs.ROOT);
-      console.log("Login successful! Response is: ", response);
     } catch (error) {
       message.error(error.message);
     } finally {
