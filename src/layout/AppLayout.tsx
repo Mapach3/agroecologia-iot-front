@@ -1,5 +1,7 @@
 import { Layout } from "antd";
 import React from "react";
+import { useSelector } from "react-redux";
+import { IGlobalState } from "../redux/store";
 import Header from "./Header";
 
 const { Content, Footer } = Layout;
@@ -9,6 +11,10 @@ interface Props {
 }
 
 const AppLayout: React.FC<Props> = ({ children }) => {
+  const { profile } = useSelector((state: IGlobalState) => state.auth);
+
+  if (!profile) return <>{children}</>;
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header />
