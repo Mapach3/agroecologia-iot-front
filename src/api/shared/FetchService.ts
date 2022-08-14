@@ -1,4 +1,6 @@
 import { API_URL } from "../../config/general-config";
+import { getAuthToken } from "../../redux/selectors";
+import store from "../../redux/store";
 
 interface FetchParams {
   url: string;
@@ -45,8 +47,9 @@ class FetchService {
 
   static getHeaders() {
     const headers = new Headers();
+    const jwtToken = getAuthToken(store.getState());
     headers.append("Content-Type", "application/json");
-    //TODO: Add Authorization from Redux Store
+    if (jwtToken) headers.append("Authorization", `Bearer ${jwtToken}`);
     return headers;
   }
 

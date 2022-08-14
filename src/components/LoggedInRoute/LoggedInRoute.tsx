@@ -17,7 +17,8 @@ const LoggedInRoute: React.FC<Props> = ({ children }) => {
       ? `?from=${window.location.pathname}`
       : "";
 
-  if (!isLoggedIn) return <Navigate to={from} />;
+  if (!isLoggedIn)
+    return <Navigate to={{ pathname: URLs.LOGIN, search: from }} />;
 
   return <>{children}</>;
 };

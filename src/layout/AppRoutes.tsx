@@ -6,7 +6,6 @@ import { URLs } from "../config/enums";
 import LoggedInRoute from "../components/LoggedInRoute/LoggedInRoute";
 import GardensPage from "../pages/GardensPage";
 import DashboardPage from "../pages/DashboardPage";
-import PublicRoute from "../components/PublicRoute/PublicRoute";
 import UsersPage from "../pages/UsersPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import AppLayout from "./AppLayout";
@@ -51,14 +50,7 @@ const AppRoutes: React.FC = () => {
             }
           />
 
-          <Route
-            path={URLs.LOGIN}
-            element={
-              <PublicRoute>
-                <LoginPage />
-              </PublicRoute>
-            }
-          />
+          <Route path={URLs.LOGIN} element={<LoginPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AppLayout>

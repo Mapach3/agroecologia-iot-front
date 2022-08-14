@@ -1,8 +1,10 @@
 .ant-menu-item {
     text-transform: uppercase;
     font-weight: 700;
+    color: rgba(0, 0, 0, .65);
 }
 
-.ant-menu-item:hover {
-    color: #9791ae !important;
+.ant-menu-item:hover,
+.ant-menu-item-selected {
+    color: #B284BE !important;
 }
