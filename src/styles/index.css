@@ -1,5 +1,4 @@
 @import '~antd/dist/antd.css';
-@import 'antd-overrides.css';
 
 .header {
     background: #81be54;
@@ -18,6 +17,17 @@
     justify-content: center;
     background-color: transparent;
     border-bottom: none;
+}
+
+.header-menu .ant-menu-item {
+    text-transform: uppercase;
+    font-weight: 700;
+    color: rgba(0, 0, 0, .65);
+}
+
+.header-menu .ant-menu-item:hover,
+.header-menu .ant-menu-item-selected {
+    color: #B284BE !important;
 }
 
 .header-avatar {

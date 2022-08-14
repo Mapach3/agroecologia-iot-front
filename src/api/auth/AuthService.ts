@@ -44,6 +44,12 @@ class AuthService {
     const tokenExpire = localStorage.getItem(LOCAL_STORAGE_EXPIRE);
     return tokenExpire || undefined;
   }
+
+  static removeLocalStorage() {
+    localStorage.removeItem(LOCAL_STORAGE_PROFILE);
+    localStorage.removeItem(LOCAL_STORAGE_JWT);
+    localStorage.removeItem(LOCAL_STORAGE_EXPIRE);
+  }
 }
 
 export default AuthService;

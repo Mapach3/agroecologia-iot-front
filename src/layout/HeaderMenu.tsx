@@ -12,7 +12,7 @@ const HeaderMenu: React.FC<Props> = ({ profile }) => {
   return (
     <Menu
       mode="horizontal"
-      className="header-menu"
+      rootClassName="header-menu"
       items={renderMenuItemsByRole(profile.roleCode)}
       selectedKeys={[window.location.pathname]}
       onClick={({ key }) => navigate(key)}

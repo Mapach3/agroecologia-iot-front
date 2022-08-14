@@ -1,6 +1,6 @@
 import AuthService from "../../api/auth/AuthService";
 import { ILoginResponse, IProfile } from "../../api/auth/models";
-import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
+import { Action, createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
 
 // Interfaces
 export interface IAuthState {
@@ -26,8 +26,9 @@ const authSlice: Slice<IAuthState> = createSlice({
       state = { ...state, token, profile, expire };
       return state;
     },
-    logout: () => {
+    logout: (state) => {
       return {
+        ...state,
         expire: undefined,
         profile: undefined,
         token: undefined,
