@@ -1,10 +1,8 @@
 import { MenuOutlined } from "@ant-design/icons";
 import { Drawer, Menu } from "antd";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { IProfile } from "../api/auth/models";
-import { RolesEnum } from "../api/roles/enum";
 import {
   HeaderMenuActions,
   renderMenuItemsByRole,
@@ -37,10 +35,10 @@ const HeaderMobileMenu: React.FC<Props> = ({ profile }) => {
         closable
       >
         <Menu
+          rootClassName="header-menu"
           style={{ border: 0 }}
           items={[
             ...renderMenuItemsByRole(profile.roleCode),
-
             ...HeaderMenuActions,
           ]}
           onClick={({ key }) => {

@@ -9,6 +9,7 @@ import DashboardPage from "../pages/DashboardPage";
 import UsersPage from "../pages/UsersPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import AppLayout from "./AppLayout";
+import LogoutPage from "../pages/LogoutPage";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -51,6 +52,8 @@ const AppRoutes: React.FC = () => {
           />
 
           <Route path={URLs.LOGIN} element={<LoginPage />} />
+          <Route path={URLs.LOGOUT} element={<LogoutPage />} />
+
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AppLayout>
