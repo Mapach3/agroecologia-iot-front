@@ -1,14 +1,20 @@
 import { Menu } from "antd";
 import { useNavigate } from "react-router";
-import { MenuItems } from "../helpers/menu-helpers";
+import { IProfile } from "../api/auth/models";
+import { renderMenuItemsByRole } from "../helpers/menu-helper";
 
-const HeaderMenu = () => {
+interface Props {
+  profile: IProfile;
+}
+
+const HeaderMenu: React.FC<Props> = ({ profile }) => {
   const navigate = useNavigate();
   return (
     <Menu
       mode="horizontal"
       className="header-menu"
-      items={MenuItems}
+      items={renderMenuItemsByRole(profile.roleCode)}
+      selectedKeys={[window.location.pathname]}
       onClick={({ key }) => navigate(key)}
     ></Menu>
   );
