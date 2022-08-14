@@ -1,10 +1,20 @@
 import { MenuOutlined } from "@ant-design/icons";
 import { Drawer, Menu } from "antd";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { MenuItems } from "../helpers/menu-helpers";
+import { IProfile } from "../api/auth/models";
+import { RolesEnum } from "../api/roles/enum";
+import {
+  HeaderMenuActions,
+  renderMenuItemsByRole,
+} from "../helpers/menu-helper";
 
-const HeaderMobileMenu: React.FC = () => {
+interface Props {
+  profile: IProfile;
+}
+
+const HeaderMobileMenu: React.FC<Props> = ({ profile }) => {
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
 
@@ -21,19 +31,23 @@ const HeaderMobileMenu: React.FC = () => {
         onClick={() => setVisible(true)}
       />
       <Drawer
-        width="60%"
+        width={248}
         visible={visible}
         onClose={() => setVisible(false)}
         closable
       >
         <Menu
           style={{ border: 0 }}
-          items={MenuItems}
+          items={[
+            ...renderMenuItemsByRole(profile.roleCode),
+
+            ...HeaderMenuActions,
+          ]}
           onClick={({ key }) => {
             setVisible(false);
             navigate(key);
           }}
-        ></Menu>
+        />
       </Drawer>
     </>
   );
