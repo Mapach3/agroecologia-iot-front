@@ -86,3 +86,8 @@
     background-size: cover;
     height: 100%;
 }
+
+.loading {
+    display: flex;
+    justify-content: center;
+}
