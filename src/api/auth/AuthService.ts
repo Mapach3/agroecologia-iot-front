@@ -1,6 +1,6 @@
 import { API } from "../../config/api";
 import {
-  LOCAL_STORAGE_EXPIRE,
+  LOCAL_STORAGE_EXPIRATION,
   LOCAL_STORAGE_JWT,
   LOCAL_STORAGE_PROFILE,
 } from "../../config/general-config";
@@ -17,11 +17,27 @@ class AuthService {
       body: { username, password },
     });
 
-    const { token, profile, expire } = response;
+    const { token, profile, expiration } = response;
     localStorage.setItem(LOCAL_STORAGE_JWT, token);
-    if (expire) localStorage.setItem(LOCAL_STORAGE_EXPIRE, expire);
+    localStorage.setItem(LOCAL_STORAGE_EXPIRATION, expiration);
     AuthService.saveUserToLocalStorage(profile);
     return response;
+  }
+
+  static async logout() {
+    const response = await FetchService.post<boolean>({
+      url: API.LOGOUT,
+    });
+    return response;
+  }
+
+  static async refreshToken() {
+    const response = await FetchService.post<ILoginResponse>({
+      url: API.REFRESH_TOKEN,
+    });
+    const { token, expiration } = response;
+    localStorage.setItem(LOCAL_STORAGE_JWT, token);
+    localStorage.setItem(LOCAL_STORAGE_EXPIRATION, expiration);
   }
 
   //Local Storage Helper Methods
@@ -40,15 +56,15 @@ class AuthService {
     return jwtToken || undefined;
   }
 
-  static getTokenExpire(): string | undefined {
-    const tokenExpire = localStorage.getItem(LOCAL_STORAGE_EXPIRE);
+  static getTokenExpiration(): string | undefined {
+    const tokenExpire = localStorage.getItem(LOCAL_STORAGE_EXPIRATION);
     return tokenExpire || undefined;
   }
 
   static removeLocalStorage() {
     localStorage.removeItem(LOCAL_STORAGE_PROFILE);
     localStorage.removeItem(LOCAL_STORAGE_JWT);
-    localStorage.removeItem(LOCAL_STORAGE_EXPIRE);
+    localStorage.removeItem(LOCAL_STORAGE_EXPIRATION);
   }
 }
 

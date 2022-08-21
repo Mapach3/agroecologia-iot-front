@@ -1,19 +1,19 @@
 import AuthService from "../../api/auth/AuthService";
 import { ILoginResponse, IProfile } from "../../api/auth/models";
-import { Action, createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
 
 // Interfaces
 export interface IAuthState {
   token?: string;
   profile?: IProfile;
-  expire?: string;
+  expiration?: string;
 }
 //
 
 const initialState: IAuthState = {
   token: AuthService.getToken(),
   profile: AuthService.getUserProfile(),
-  expire: AuthService.getTokenExpire(),
+  expiration: AuthService.getTokenExpiration(),
 };
 
 //Slice
@@ -22,21 +22,29 @@ const authSlice: Slice<IAuthState> = createSlice({
   initialState: initialState,
   reducers: {
     loginSuccessful: (state, action: PayloadAction<ILoginResponse>) => {
-      const { token, profile, expire } = action.payload;
-      state = { ...state, token, profile, expire };
+      const { token, profile, expiration } = action.payload;
+      state = { ...state, token, profile, expiration };
       return state;
     },
     logout: (state) => {
       return {
         ...state,
-        expire: undefined,
+        expiration: undefined,
         profile: undefined,
         token: undefined,
+      };
+    },
+    refreshToken: (state, action: PayloadAction<ILoginResponse>) => {
+      const { token, expiration } = action.payload;
+      return {
+        ...state,
+        token: token,
+        expiration: expiration,
       };
     },
   },
 });
 
-export const { loginSuccessful, logout } = authSlice.actions;
+export const { loginSuccessful, logout, refreshToken } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,6 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import { RolesEnum } from "../api/roles/enum";
 import AuthorizedRoute from "../components/AuthorizedRoute/AuthorizedRoute";
+import UserDetail from "../components/Users/UserDetail";
+import UsersGrid from "../components/Users/UsersGrid";
 import { URLs } from "../config/enums";
 
 const UsersPage: React.FC = () => {
@@ -10,7 +12,7 @@ const UsersPage: React.FC = () => {
         path={URLs.ROOT}
         element={
           <AuthorizedRoute roles={[RolesEnum.ADMIN]}>
-            <span>Grilla de usuarios</span>
+            <UsersGrid />
           </AuthorizedRoute>
         }
       />
@@ -18,7 +20,7 @@ const UsersPage: React.FC = () => {
         path={URLs.NEW}
         element={
           <AuthorizedRoute roles={[RolesEnum.ADMIN]}>
-            <span>Nuevo usuario</span>
+            <UserDetail />
           </AuthorizedRoute>
         }
       />
@@ -27,7 +29,7 @@ const UsersPage: React.FC = () => {
         path={URLs.DETAIL}
         element={
           <AuthorizedRoute roles={[RolesEnum.ADMIN]}>
-            <span>Detalle de un usuario</span>
+            <UserDetail />
           </AuthorizedRoute>
         }
       />

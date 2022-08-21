@@ -13,9 +13,27 @@ const NotFoundPage: React.FC = () => {
         title="404"
         subTitle="La página solicitada no existe"
         extra={
-          <Button type="primary" onClick={() => navigate(URLs.ROOT)}>
-            Volver al principio
-          </Button>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Button
+              type="primary"
+              style={{ margin: "0px auto 10px auto" }}
+              onClick={() => navigate(URLs.ROOT)}
+            >
+              Volver al principio
+            </Button>
+            <Button
+              type="primary"
+              style={{ margin: "0px auto" }}
+              onClick={() => navigate(-1)}
+            >
+              Volver atrás
+            </Button>
+          </div>
         }
       />
     );
