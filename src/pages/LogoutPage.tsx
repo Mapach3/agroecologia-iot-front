@@ -11,9 +11,14 @@ const LogoutPage: React.FC = () => {
   const { profile } = useSelector((state: IGlobalState) => state.auth);
 
   useEffect(() => {
-    const logoutUser = () => {
-      AuthService.removeLocalStorage();
-      store.dispatch(logout(null));
+    const logoutUser = async () => {
+      try {
+        await AuthService.logout();
+      } catch (error) {
+      } finally {
+        AuthService.removeLocalStorage();
+        store.dispatch(logout(null));
+      }
       message.info("Sesión terminada exitosamente");
     };
     if (!!profile) {

@@ -1,7 +1,7 @@
 export interface ILoginResponse {
   token: string;
   profile: IProfile;
-  expire: string;
+  expiration: string;
 }
 
 export interface IProfile {

@@ -9,3 +9,13 @@ export interface IUser {
   email: string;
   createdDate?: string;
 }
+
+export type UserAddType = Pick<
+  IUser,
+  "username" | "name" | "surname" | "password" | "email" | "roleId"
+>;
+
+export type UserUpdateType = Pick<
+  IUser,
+  "username" | "name" | "surname" | "email" | "roleId"
+>;

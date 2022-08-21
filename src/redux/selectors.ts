@@ -7,8 +7,8 @@ export const getAuthUser = (state: IGlobalState): IProfile | undefined =>
 export const getAuthToken = (state: IGlobalState): string | undefined =>
   state.auth.token;
 
-export const getTokenExpire = (state: IGlobalState): string | undefined =>
-  state.auth.expire;
+export const getTokenExpiration = (state: IGlobalState): string | undefined =>
+  state.auth.expiration;
 
 export const isLoggedIn = (state: IGlobalState): boolean | undefined =>
   !!getAuthToken(state);

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import LoginPage from "../pages/LoginPage";
 import RolesPage from "../pages/RolesPage";
 import { URLs } from "../config/enums";
@@ -13,51 +13,49 @@ import LogoutPage from "../pages/LogoutPage";
 
 const AppRoutes: React.FC = () => {
   return (
-    <BrowserRouter>
-      <AppLayout>
-        <Routes>
-          <Route
-            path={`${URLs.ROOT}/*`}
-            element={
-              <LoggedInRoute>
-                <DashboardPage />
-              </LoggedInRoute>
-            }
-          />
-          <Route
-            path={`${URLs.USERS}/*`}
-            element={
-              <LoggedInRoute>
-                <UsersPage />
-              </LoggedInRoute>
-            }
-          />
+    <AppLayout>
+      <Routes>
+        <Route
+          path={`${URLs.ROOT}/*`}
+          element={
+            <LoggedInRoute>
+              <DashboardPage />
+            </LoggedInRoute>
+          }
+        />
+        <Route
+          path={`${URLs.USERS}/*`}
+          element={
+            <LoggedInRoute>
+              <UsersPage />
+            </LoggedInRoute>
+          }
+        />
 
-          <Route
-            path={`${URLs.ROLES}/*`}
-            element={
-              <LoggedInRoute>
-                <RolesPage />
-              </LoggedInRoute>
-            }
-          />
+        <Route
+          path={`${URLs.ROLES}/*`}
+          element={
+            <LoggedInRoute>
+              <RolesPage />
+            </LoggedInRoute>
+          }
+        />
 
-          <Route
-            path={`${URLs.GARDENS}/*`}
-            element={
-              <LoggedInRoute>
-                <GardensPage />
-              </LoggedInRoute>
-            }
-          />
+        <Route
+          path={`${URLs.GARDENS}/*`}
+          element={
+            <LoggedInRoute>
+              <GardensPage />
+            </LoggedInRoute>
+          }
+        />
 
-          <Route path={URLs.LOGIN} element={<LoginPage />} />
-          <Route path={URLs.LOGOUT} element={<LogoutPage />} />
+        <Route path={URLs.LOGIN} element={<LoginPage />} />
+        <Route path={URLs.LOGOUT} element={<LogoutPage />} />
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </AppLayout>
-    </BrowserRouter>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </AppLayout>
   );
 };
 
