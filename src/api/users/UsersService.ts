@@ -22,6 +22,12 @@ class UsersService {
     });
   }
 
+  static async fetchUsersByRoleId(id: string) {
+    return await FetchService.get<IUser[]>({
+      url: `${API.USERS}/role/${id}`,
+    });
+  }
+
   static async add(entity: UserAddType): Promise<number> {
     return await FetchService.post<number>({
       url: API.USERS,

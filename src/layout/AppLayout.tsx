@@ -11,9 +11,9 @@ interface Props {
 }
 
 const AppLayout: React.FC<Props> = ({ children }) => {
-  const { profile } = useSelector((state: IGlobalState) => state.auth);
+  const { profile, token } = useSelector((state: IGlobalState) => state.auth);
 
-  if (!profile) return <>{children}</>;
+  if (!profile || !token) return <>{children}</>;
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
