@@ -1,7 +1,7 @@
 export enum API {
   //Administrative
   LOGIN = "/auth/login",
-  LOGOUT = "/users/logout",
+  LOGOUT = "/auth/logout",
   REFRESH_TOKEN = "/auth/refreshtoken",
 
   //Business

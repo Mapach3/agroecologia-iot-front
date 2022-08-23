@@ -19,14 +19,19 @@
     border-bottom: none;
 }
 
-.header-menu .ant-menu-item {
+.header-menu .ant-menu-item,
+.header-menu .ant-menu-submenu {
     text-transform: uppercase;
     font-weight: 700;
     color: rgba(0, 0, 0, .65);
 }
 
+
 .header-menu .ant-menu-item:hover,
-.header-menu .ant-menu-item-selected {
+.header-menu .ant-menu-item-selected,
+.header-menu .ant-menu-submenu-title:hover,
+.header-menu .ant-menu-submenu-selected,
+.header-menu .ant-menu-submenu-active {
     color: #B284BE !important;
 }
 
@@ -90,4 +95,17 @@
 .loading {
     display: flex;
     justify-content: center;
+}
+
+.loading-app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
 }

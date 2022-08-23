@@ -10,6 +10,7 @@ import UsersPage from "../pages/UsersPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import AppLayout from "./AppLayout";
 import LogoutPage from "../pages/LogoutPage";
+import PublicRoute from "../components/PublicRoute/PublicRoute";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -50,7 +51,14 @@ const AppRoutes: React.FC = () => {
           }
         />
 
-        <Route path={URLs.LOGIN} element={<LoginPage />} />
+        <Route
+          path={URLs.LOGIN}
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
+        />
         <Route path={URLs.LOGOUT} element={<LogoutPage />} />
 
         <Route path="*" element={<NotFoundPage />} />

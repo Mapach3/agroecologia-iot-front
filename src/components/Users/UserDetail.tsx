@@ -105,8 +105,8 @@ const UserDetail: React.FC<Props> = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const response = await RolesService.fetchAll();
-      setRoles(response);
+      const rolesResponse = await RolesService.fetchAll();
+      setRoles(rolesResponse);
 
       if (id) {
         try {

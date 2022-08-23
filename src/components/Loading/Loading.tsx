@@ -1,17 +1,16 @@
-import { Spin } from "antd";
+import { Layout, Spin } from "antd";
 
 const Loading = () => {
   return (
-    <div
+    <Layout
       style={{
-        display: "flex",
         minHeight: "100vh",
-        justifyContent: "center",
-        alignItems: "center",
       }}
     >
-      <Spin size="large" />
-    </div>
+      <div className="loading-app">
+        <Spin size="large" />
+      </div>
+    </Layout>
   );
 };
 export default Loading;

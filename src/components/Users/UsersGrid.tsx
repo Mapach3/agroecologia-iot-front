@@ -58,6 +58,7 @@ const UsersGrid: React.FC = () => {
     {
       title: "Acciones",
       align: "center" as "center",
+      width: 120,
       render: (cell: any, row: IUser) => (
         <div>
           <Tooltip title="Editar">

@@ -7,6 +7,7 @@ export interface MenuItem {
   label: string;
   roles?: string[];
   icon?: JSX.Element;
+  children?: MenuItem[];
 }
 
 export const MenuItems: MenuItem[] = [
@@ -17,7 +18,23 @@ export const MenuItems: MenuItem[] = [
   },
   { key: URLs.USERS, label: "Usuarios", roles: [RolesEnum.ADMIN] },
   { key: URLs.ROLES, label: "Roles", roles: [RolesEnum.ADMIN] },
-  { key: URLs.GARDENS, label: "Huertas", roles: [RolesEnum.GARDEN_MANAGER] },
+  {
+    key: "gardens-submenu",
+    label: "Huertas",
+    roles: [RolesEnum.GARDEN_MANAGER],
+    children: [
+      {
+        key: URLs.GARDENS,
+        label: "Mis huertas",
+        roles: [RolesEnum.GARDEN_MANAGER],
+      },
+      {
+        key: URLs.CROPS,
+        label: "Cultivos",
+        roles: [RolesEnum.GARDEN_MANAGER],
+      },
+    ],
+  },
   {
     key: URLs.SHARED_GARDENS,
     label: "Huertas Compartidas",

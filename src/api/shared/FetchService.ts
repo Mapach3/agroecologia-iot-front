@@ -1,5 +1,6 @@
 import { API_URL } from "../../config/general-config";
 import { mustRefreshToken } from "../../helpers/auth-helper";
+import { logout } from "../../redux/auth/authSlice";
 import { getAuthToken } from "../../redux/selectors";
 import store from "../../redux/store";
 import AuthService from "../auth/AuthService";
@@ -96,8 +97,14 @@ class FetchService {
       //200 or 201 or 204
       return (await response.json()) as T;
 
-    if (response.status === 415) {
-      throw new Error("Unsupported Media Type [415]");
+    if (response.status === 400) {
+      throw new Error(await response.json());
+    }
+
+    if (response.status === 401) {
+      AuthService.logout();
+      store.dispatch(logout(null));
+      AuthService.removeLocalStorage();
     }
 
     if (response.status === 404) {
@@ -106,6 +113,10 @@ class FetchService {
 
     if (response.status === 405) {
       throw new Error("Method Not Allowed [405]");
+    }
+
+    if (response.status === 415) {
+      throw new Error("Unsupported Media Type [415]");
     }
 
     if (response.status === 500) {
