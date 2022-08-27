@@ -5,5 +5,7 @@ export const hasPermission = (roles: RolesEnum[]) => {
   const profile = AuthService.getUserProfile();
 
   if (!profile) return false;
+  if (profile.roleCode === RolesEnum.ADMIN) return true;
+
   return roles.indexOf(profile.roleCode as RolesEnum) > -1;
 };

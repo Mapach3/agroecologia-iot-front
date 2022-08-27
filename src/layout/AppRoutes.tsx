@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "../pages/LoginPage";
 import RolesPage from "../pages/RolesPage";
 import { URLs } from "../config/enums";
@@ -8,46 +8,54 @@ import GardensPage from "../pages/GardensPage";
 import DashboardPage from "../pages/DashboardPage";
 import UsersPage from "../pages/UsersPage";
 import NotFoundPage from "../pages/NotFoundPage";
-import AppLayout from "./AppLayout";
 import LogoutPage from "../pages/LogoutPage";
 import PublicRoute from "../components/PublicRoute/PublicRoute";
+import AppLayout from "./AppLayout";
 
 const AppRoutes: React.FC = () => {
   return (
-    <AppLayout>
+    <BrowserRouter>
       <Routes>
         <Route
           path={`${URLs.ROOT}/*`}
           element={
-            <LoggedInRoute>
-              <DashboardPage />
-            </LoggedInRoute>
+            <AppLayout>
+              <LoggedInRoute>
+                <DashboardPage />
+              </LoggedInRoute>
+            </AppLayout>
           }
         />
         <Route
           path={`${URLs.USERS}/*`}
           element={
-            <LoggedInRoute>
-              <UsersPage />
-            </LoggedInRoute>
+            <AppLayout>
+              <LoggedInRoute>
+                <UsersPage />
+              </LoggedInRoute>
+            </AppLayout>
           }
         />
 
         <Route
           path={`${URLs.ROLES}/*`}
           element={
-            <LoggedInRoute>
-              <RolesPage />
-            </LoggedInRoute>
+            <AppLayout>
+              <LoggedInRoute>
+                <RolesPage />
+              </LoggedInRoute>
+            </AppLayout>
           }
         />
 
         <Route
           path={`${URLs.GARDENS}/*`}
           element={
-            <LoggedInRoute>
-              <GardensPage />
-            </LoggedInRoute>
+            <AppLayout>
+              <LoggedInRoute>
+                <GardensPage />
+              </LoggedInRoute>
+            </AppLayout>
           }
         />
 
@@ -59,11 +67,25 @@ const AppRoutes: React.FC = () => {
             </PublicRoute>
           }
         />
-        <Route path={URLs.LOGOUT} element={<LogoutPage />} />
 
-        <Route path="*" element={<NotFoundPage />} />
+        <Route
+          path={URLs.LOGOUT}
+          element={
+            <AppLayout>
+              <LogoutPage />
+            </AppLayout>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <AppLayout>
+              <NotFoundPage />
+            </AppLayout>
+          }
+        />
       </Routes>
-    </AppLayout>
+    </BrowserRouter>
   );
 };
 
