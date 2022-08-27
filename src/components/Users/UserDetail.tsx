@@ -69,7 +69,6 @@ const UserDetail: React.FC<Props> = () => {
           roleId: values.roleId,
         };
         await UsersService.update(id, entity);
-        message.success("Operación exitosa");
       } else {
         const entity: UserAddType = {
           name: values.name,
@@ -80,8 +79,8 @@ const UserDetail: React.FC<Props> = () => {
           roleId: values.roleId,
         };
         await UsersService.add(entity);
-        message.success("Operación exitosa");
       }
+      message.success("Operación exitosa");
       navigate(-1);
     } catch (error) {
       if (error.message) message.error(error.message);
