@@ -39,7 +39,7 @@ const RolesGrid = () => {
   ];
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchRoles = async () => {
       try {
         setIsLoading(true);
         const response = await RolesService.fetchAll();
@@ -51,7 +51,7 @@ const RolesGrid = () => {
       }
     };
 
-    fetchUsers();
+    fetchRoles();
   }, []);
 
   return (

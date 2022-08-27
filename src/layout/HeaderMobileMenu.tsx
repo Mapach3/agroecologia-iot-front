@@ -36,6 +36,7 @@ const HeaderMobileMenu: React.FC<Props> = ({ profile }) => {
       >
         <Menu
           rootClassName="header-menu"
+          selectedKeys={[window.location.pathname]}
           style={{ border: 0 }}
           items={[
             ...renderMenuItemsByRole(profile.roleCode),
