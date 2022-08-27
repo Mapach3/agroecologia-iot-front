@@ -183,7 +183,7 @@ const GardenDetail = () => {
                       rules={[{ required: true, message: "Campo obligatorio" }]}
                       initialValue={
                         form.getFieldValue(sector.key) ||
-                        cryptoRandomString({ length: 36 })
+                        cryptoRandomString({ length: 64 })
                       }
                     >
                       <Input disabled readOnly />
