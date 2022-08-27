@@ -20,7 +20,7 @@ export const MenuItems: MenuItem[] = [
   { key: URLs.ROLES, label: "Roles", roles: [RolesEnum.ADMIN] },
   {
     key: "gardens-submenu",
-    label: "Huertas",
+    label: "Gestión de Huertas",
     roles: [RolesEnum.GARDEN_MANAGER],
     children: [
       {
