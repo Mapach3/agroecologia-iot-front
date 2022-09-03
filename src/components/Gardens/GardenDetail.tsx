@@ -54,7 +54,12 @@ const GardenDetail = () => {
     name: "",
   });
 
-  const [crops, setCrops] = useState<ICrop[]>([]);
+  const [crops, setCrops] = useState<ICrop[]>([
+    { cropId: 1, name: "Zanahoria", ownerUserId: 1, createdAt: "asdasdasd" },
+    { cropId: 2, name: "Papa", ownerUserId: 1, createdAt: "asdasdasd" },
+    { cropId: 3, name: "Chaucha", ownerUserId: 1, createdAt: "asdasdasd" },
+    { cropId: 4, name: "Tomate", ownerUserId: 1, createdAt: "asdasdasd" },
+  ]);
   const [isLoadingCrops, setIsLoadingCrops] = useState(true);
 
   const handleSubmit = async (values: FormValues) => {
