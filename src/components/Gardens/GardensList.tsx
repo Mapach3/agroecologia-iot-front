@@ -38,53 +38,8 @@ const GardensList = () => {
     const fetchGardens = async () => {
       try {
         setIsLoading(true);
-        // const response = await GardensService.fetch(gridState);
-        setFetchedGardens({
-          count: 4,
-          list: [
-            {
-              gardenId: 1,
-              name: "Huerta 1",
-              description:
-                "Una huerta random 1 con un texto extremadamente largo para manejarlo correctamente implementando algun tipo de manejo de cadenas de texto",
-              location: "Avenida 29 de Septiembre 2213",
-              ownerUserId: 1,
-              sectors: [],
-            },
-            {
-              gardenId: 2,
-              name: "Huerta 2",
-              description: "Una huerta random 2",
-              location: "Avenida 29 de Septiembre 2213",
-              ownerUserId: 1,
-              sectors: [],
-            },
-            {
-              gardenId: 3,
-              name: "Huerta 3",
-              description: "Una huerta random 2",
-              location: "Avenida 29 de Septiembre 2213",
-              ownerUserId: 1,
-              sectors: [],
-            },
-            {
-              gardenId: 4,
-              name: "Huerta 4",
-              description: "Una huerta random 4",
-              location: "Avenida 29 de Septiembre 2213",
-              ownerUserId: 1,
-              sectors: [],
-            },
-            {
-              gardenId: 5,
-              name: "Huerta 5",
-              description: "Una huerta random 5",
-              location: "Avenida 29 de Septiembre 2213",
-              ownerUserId: 1,
-              sectors: [],
-            },
-          ],
-        });
+        const response = await GardensService.fetchList(gridState);
+        setFetchedGardens(response);
       } catch (error) {
         if (error.message) message.error(error.message);
       } finally {
@@ -93,7 +48,7 @@ const GardensList = () => {
     };
 
     fetchGardens();
-  }, []);
+  }, [gridState]);
 
   return (
     <div className="container">

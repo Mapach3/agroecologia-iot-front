@@ -2,6 +2,7 @@ import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Card, message, Popconfirm, Table, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import CropsService from "../../api/crops/CropsService";
 import { ICrop } from "../../api/crops/models";
 import { PaginatedList } from "../../api/shared/models";
 import { URLs } from "../../config/enums";
@@ -22,9 +23,9 @@ const CropsGrid = () => {
   const handleDelete = async (id: string) => {
     try {
       setIsLoading(true);
-      // await CropsService.delete(id);
+      await CropsService.delete(id);
       message.success("Operación exitosa");
-      // setGridState({ ...gridState });
+      setGridState({ ...gridState });
     } catch (error) {
       if (error.message) message.error(error.message);
     } finally {
@@ -59,7 +60,7 @@ const CropsGrid = () => {
             <Popconfirm
               placement="right"
               cancelText="Cancelar"
-              title="¿Eliminar Cultivo?"
+              title="¿Eliminar Cultivo? Se eliminará también de los sectores asociados"
               onConfirm={() => handleDelete(row.cropId.toString())}
               cancelButtonProps={{ loading: isLoading }}
             >
@@ -75,11 +76,8 @@ const CropsGrid = () => {
     const fetchCrops = async () => {
       try {
         setIsLoading(true);
-        // const response = await CropsService.fetch(gridState);
-        setFetchedCrops({
-          count: 0,
-          list: [],
-        });
+        const response = await CropsService.fetchList(gridState);
+        setFetchedCrops(response);
       } catch (error) {
         if (error.message) message.error(error.message);
       } finally {
@@ -88,7 +86,7 @@ const CropsGrid = () => {
     };
 
     fetchCrops();
-  }, []);
+  }, [gridState]);
 
   return (
     <div className="container">

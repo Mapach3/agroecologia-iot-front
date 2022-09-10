@@ -112,7 +112,7 @@ const CropDetail = () => {
             <Divider />
             {!!id && (
               <Popconfirm
-                title="¿Eliminar Huerta?"
+                title="¿Eliminar Cultivo? Se eliminará también de los sectores asociados"
                 onConfirm={() => handleDelete}
                 cancelText="Cancelar"
               >

@@ -24,6 +24,8 @@ import {
 import { ISector } from "../../api/sectors/models";
 import BackButton from "../BackButton/BackButton";
 import cryptoRandomString from "crypto-random-string";
+import CropsService from "../../api/crops/CropsService";
+import { createBaseGridParams } from "../../helpers/grid-helper";
 
 interface FormValues {
   name: string;
@@ -54,12 +56,7 @@ const GardenDetail = () => {
     name: "",
   });
 
-  const [crops, setCrops] = useState<ICrop[]>([
-    { cropId: 1, name: "Zanahoria", ownerUserId: 1, createdAt: "asdasdasd" },
-    { cropId: 2, name: "Papa", ownerUserId: 1, createdAt: "asdasdasd" },
-    { cropId: 3, name: "Chaucha", ownerUserId: 1, createdAt: "asdasdasd" },
-    { cropId: 4, name: "Tomate", ownerUserId: 1, createdAt: "asdasdasd" },
-  ]);
+  const [crops, setCrops] = useState<ICrop[]>([]);
   const [isLoadingCrops, setIsLoadingCrops] = useState(true);
 
   const handleSubmit = async (values: FormValues) => {
@@ -72,7 +69,15 @@ const GardenDetail = () => {
           name: values.name,
           description: values.description,
           location: values.location,
-          sectors: values.sectors,
+          sectors: values.sectors.map((sector) => {
+            return {
+              sectorId: sector.sectorId,
+              name: sector.name,
+              centralizerKey: sector.centralizerKey,
+              cropIds: sector.cropIds,
+              gardenId: sector.gardenId,
+            };
+          }),
         };
         await GardensService.update(id, entity);
       } else {
@@ -80,7 +85,15 @@ const GardenDetail = () => {
           name: values.name,
           description: values.description,
           location: values.location,
-          sectors: values.sectors,
+          sectors: values.sectors.map((sector) => {
+            return {
+              sectorId: sector.sectorId,
+              name: sector.name,
+              centralizerKey: sector.centralizerKey,
+              cropIds: sector.cropIds,
+              gardenId: sector.gardenId,
+            };
+          }),
         };
         await GardensService.add(entity);
       }
@@ -110,6 +123,7 @@ const GardenDetail = () => {
     const fetchGarden = async () => {
       if (id) {
         try {
+          setIsLoading(true);
           const response = await GardensService.fetchOne(id);
           setGarden(response);
         } catch (error) {
@@ -126,8 +140,10 @@ const GardenDetail = () => {
     const fetchCrops = async () => {
       try {
         setIsLoadingCrops(true);
-        //const cropsResponse = await CropsService.fetch();
-        //setCrops(cropsResponse);
+        const cropsResponse = await CropsService.fetchList(
+          createBaseGridParams({ sortField: "name" })
+        );
+        setCrops(cropsResponse.list);
         setIsLoadingCrops(false);
       } catch (error) {
         if (error.message) message.error(error.message);
@@ -139,11 +155,15 @@ const GardenDetail = () => {
 
   return (
     <div className="container">
-      <Card title={<BackButton title="Huerta" />} loading={isLoading}>
+      <Card
+        title={<BackButton title="Huerta" />}
+        loading={isLoading || isLoadingCrops}
+      >
         <Form
           form={form}
           onFinish={(values: FormValues) => handleSubmit(values)}
           {...formItemLayout}
+          initialValues={garden}
         >
           <Form.Item
             label="Nombre"
@@ -197,6 +217,13 @@ const GardenDetail = () => {
                       label="Cultivos"
                       key={`sectors[${index}].cropIds`}
                       name={[sector.name, "cropIds"]}
+                      rules={[
+                        {
+                          required: true,
+                          message:
+                            "La huerta debe contener por lo menos un cultivo",
+                        },
+                      ]}
                     >
                       <Select
                         optionFilterProp="children"
