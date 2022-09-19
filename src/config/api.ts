@@ -7,4 +7,6 @@ export enum API {
   //Business
   USERS = "/users",
   ROLES = "/roles",
+  GARDENS = "/gardens",
+  CROPS = "/crops",
 }

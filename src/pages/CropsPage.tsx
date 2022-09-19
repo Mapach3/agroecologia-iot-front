@@ -1,20 +1,18 @@
 import { Route, Routes } from "react-router-dom";
 import { RolesEnum } from "../api/roles/enum";
 import AuthorizedRoute from "../components/AuthorizedRoute/AuthorizedRoute";
-import GardenDetail from "../components/Gardens/GardenDetail";
-import GardenInfoCard from "../components/Gardens/GardenInfoCard";
-import GardensList from "../components/Gardens/GardensList";
+import CropDetail from "../components/Crops/CropDetail";
+import CropsGrid from "../components/Crops/CropsGrid";
 import { URLs } from "../config/enums";
 
-const GardensPage: React.FC = () => {
+const CropsPage: React.FC = () => {
   return (
     <Routes>
       <Route
         path={URLs.ROOT}
         element={
           <AuthorizedRoute roles={[RolesEnum.GARDEN_MANAGER]}>
-            {/* <GardensGrid /> */}
-            <GardensList />
+            <CropsGrid />
           </AuthorizedRoute>
         }
       />
@@ -23,7 +21,7 @@ const GardensPage: React.FC = () => {
         path={URLs.NEW}
         element={
           <AuthorizedRoute roles={[RolesEnum.GARDEN_MANAGER]}>
-            <GardenDetail />
+            <CropDetail />
           </AuthorizedRoute>
         }
       />
@@ -32,7 +30,7 @@ const GardensPage: React.FC = () => {
         path={URLs.DETAIL}
         element={
           <AuthorizedRoute roles={[RolesEnum.GARDEN_MANAGER]}>
-            <GardenDetail />
+            <CropDetail />
           </AuthorizedRoute>
         }
       />
@@ -40,4 +38,4 @@ const GardensPage: React.FC = () => {
   );
 };
 
-export default GardensPage;
+export default CropsPage;
