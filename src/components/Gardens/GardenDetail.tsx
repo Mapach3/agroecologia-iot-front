@@ -1,4 +1,4 @@
-import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { CopyOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   Button,
   Card,
@@ -9,12 +9,11 @@ import {
   message,
   Popconfirm,
   Row,
-  Select,
+  Tooltip,
 } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { ICrop } from "../../api/crops/models";
 import GardensService from "../../api/gardens/GardensService";
 import {
   GardenAddType,
@@ -24,8 +23,6 @@ import {
 import { ISector } from "../../api/sectors/models";
 import BackButton from "../BackButton/BackButton";
 import cryptoRandomString from "crypto-random-string";
-import CropsService from "../../api/crops/CropsService";
-import { createBaseGridParams } from "../../helpers/grid-helper";
 
 interface FormValues {
   name: string;
@@ -56,11 +53,7 @@ const GardenDetail = () => {
     name: "",
   });
 
-  const [crops, setCrops] = useState<ICrop[]>([]);
-  const [isLoadingCrops, setIsLoadingCrops] = useState(true);
-
   const handleSubmit = async (values: FormValues) => {
-    console.log(values);
     try {
       setIsSubmitting(true);
       if (id) {
@@ -74,12 +67,12 @@ const GardenDetail = () => {
               sectorId: sector.sectorId,
               name: sector.name,
               centralizerKey: sector.centralizerKey,
-              cropIds: sector.cropIds,
               gardenId: sector.gardenId,
             };
           }),
         };
-        await GardensService.update(id, entity);
+        //   await GardensService.update(id, entity);
+        console.log(entity);
       } else {
         const entity: GardenAddType = {
           name: values.name,
@@ -90,20 +83,27 @@ const GardenDetail = () => {
               sectorId: sector.sectorId,
               name: sector.name,
               centralizerKey: sector.centralizerKey,
-              cropIds: sector.cropIds,
               gardenId: sector.gardenId,
             };
           }),
         };
-        await GardensService.add(entity);
+        // await GardensService.add(entity);
+        console.log(entity);
       }
+
       message.success("Operación exitosa");
-      navigate(-1);
+      // navigate(-1);
     } catch (error) {
       if (error.message) message.error(error.message);
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleCopy = async (text: string) => {
+    await navigator.clipboard.writeText(text);
+    debugger;
+    message.success("Copiado al portapapeles");
   };
 
   const handleDelete = async (id: string) => {
@@ -136,29 +136,9 @@ const GardenDetail = () => {
     fetchGarden();
   }, [id]);
 
-  useEffect(() => {
-    const fetchCrops = async () => {
-      try {
-        setIsLoadingCrops(true);
-        const cropsResponse = await CropsService.fetchList(
-          createBaseGridParams({ sortField: "name" })
-        );
-        setCrops(cropsResponse.list);
-        setIsLoadingCrops(false);
-      } catch (error) {
-        if (error.message) message.error(error.message);
-      }
-    };
-
-    fetchCrops();
-  }, []);
-
   return (
     <div className="container">
-      <Card
-        title={<BackButton title="Huerta" />}
-        loading={isLoading || isLoadingCrops}
-      >
+      <Card title={<BackButton title="Huerta" />} loading={isLoading}>
         <Form
           form={form}
           onFinish={(values: FormValues) => handleSubmit(values)}
@@ -186,68 +166,58 @@ const GardenDetail = () => {
           >
             <Input />
           </Form.Item>
-          <Form.List name="sectors" initialValue={garden.sectors}>
+          <Form.List name="sectors">
             {(sectors, { add, remove }) => (
               <>
-                {sectors.map((sector, index) => (
+                {sectors.map(({ key, name }) => (
                   <>
-                    <Divider>{`Sector ${(index += 1)}`}</Divider>
+                    <Divider>Datos del sector</Divider>
                     <Form.Item
                       label="Nombre"
-                      key={`sectors[${index}].name`}
-                      name={[sector.name, "name"]}
+                      name={[name, "name"]}
                       rules={[{ required: true, message: "Campo obligatorio" }]}
                     >
                       <Input />
                     </Form.Item>
                     <Form.Item
                       label="Clave Centralizador"
-                      key={`sectors[${index}].centralizerKey`}
-                      name={[sector.name, "centralizerKey"]}
+                      name={[name, "centralizerKey"]}
                       extra="Esta clave deberá ser programada en la placa de la huerta inteligente"
                       rules={[{ required: true, message: "Campo obligatorio" }]}
                       initialValue={
-                        form.getFieldValue(sector.key) ||
-                        cryptoRandomString({ length: 64 })
+                        (form.getFieldValue("sectors") as ISector[]).at(key)
+                          ? (form.getFieldValue("sectors") as ISector[]).at(
+                              key
+                            )!.centralizerKey
+                          : cryptoRandomString({ length: 64 })
                       }
                     >
-                      <Input disabled readOnly />
-                    </Form.Item>
-                    <Form.Item
-                      label="Cultivos"
-                      key={`sectors[${index}].cropIds`}
-                      name={[sector.name, "cropIds"]}
-                      rules={[
-                        {
-                          required: true,
-                          message:
-                            "La huerta debe contener por lo menos un cultivo",
-                        },
-                      ]}
-                    >
-                      <Select
-                        optionFilterProp="children"
-                        placeholder="Seleccione cultivos"
-                        mode="multiple"
-                      >
-                        {crops.map((crop) => (
-                          <Select.Option key={crop.cropId} value={crop.cropId}>
-                            {crop.name}
-                          </Select.Option>
-                        ))}
-                      </Select>
+                      <Input
+                        disabled
+                        readOnly
+                        addonAfter={
+                          <Tooltip title="Copiar">
+                            <CopyOutlined style={{ cursor: "pointer" }} />
+                          </Tooltip>
+                        }
+                      />
                     </Form.Item>
 
-                    <Button
-                      danger
-                      shape="circle"
-                      style={{ marginBottom: 10, width: 0 }}
-                      loading={isSubmitting}
-                      type="primary"
-                      onClick={() => remove(sector.name)}
-                      block
-                      icon={<MinusOutlined />}
-                    />
+                    <Popconfirm
+                      title="¿Desea eliminar el sector? La acción no tiene vuelta atrás"
+                      cancelText="Cancelar"
+                      onConfirm={() => remove(name)}
+                    >
+                      <Button
+                        danger
+                        shape="circle"
+                        style={{ marginBottom: 10, width: 0 }}
+                        loading={isSubmitting}
+                        type="primary"
+                        block
+                        icon={<MinusOutlined />}
+                      />
+                    </Popconfirm>
                   </>
                 ))}
 

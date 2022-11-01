@@ -28,11 +28,6 @@ export const MenuItems: MenuItem[] = [
         label: "Mis huertas",
         roles: [RolesEnum.GARDEN_MANAGER],
       },
-      {
-        key: URLs.CROPS,
-        label: "Cultivos",
-        roles: [RolesEnum.GARDEN_MANAGER],
-      },
     ],
   },
   {

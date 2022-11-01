@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import { RolesEnum } from "../api/roles/enum";
 import AuthorizedRoute from "../components/AuthorizedRoute/AuthorizedRoute";
 import GardenDetail from "../components/Gardens/GardenDetail";
-import GardenInfoCard from "../components/Gardens/GardenInfoCard";
 import GardensList from "../components/Gardens/GardensList";
 import { URLs } from "../config/enums";
 
