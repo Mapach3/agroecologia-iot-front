@@ -8,5 +8,4 @@ export enum API {
   USERS = "/users",
   ROLES = "/roles",
   GARDENS = "/gardens",
-  CROPS = "/crops",
 }

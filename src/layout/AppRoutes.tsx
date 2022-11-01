@@ -11,7 +11,6 @@ import NotFoundPage from "../pages/NotFoundPage";
 import LogoutPage from "../pages/LogoutPage";
 import PublicRoute from "../components/PublicRoute/PublicRoute";
 import AppLayout from "./AppLayout";
-import CropsPage from "../pages/CropsPage";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -55,17 +54,6 @@ const AppRoutes: React.FC = () => {
             <AppLayout>
               <LoggedInRoute>
                 <GardensPage />
-              </LoggedInRoute>
-            </AppLayout>
-          }
-        />
-
-        <Route
-          path={`${URLs.CROPS}/*`}
-          element={
-            <AppLayout>
-              <LoggedInRoute>
-                <CropsPage />
               </LoggedInRoute>
             </AppLayout>
           }
