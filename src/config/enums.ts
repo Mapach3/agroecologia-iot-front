@@ -7,6 +7,7 @@ export enum URLs {
   USERS = "/usuarios",
   ROLES = "/roles",
   GARDENS = "/huertas",
+  METRIC_ACCEPTATION_RANGES = "/rangos-metricas",
   PROFILE = "/perfil",
 
   // Common routes

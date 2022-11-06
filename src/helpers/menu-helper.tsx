@@ -28,6 +28,11 @@ export const MenuItems: MenuItem[] = [
         label: "Mis huertas",
         roles: [RolesEnum.GARDEN_MANAGER],
       },
+      {
+        key: URLs.METRIC_ACCEPTATION_RANGES,
+        label: "Rangos de métrica",
+        roles: [RolesEnum.GARDEN_MANAGER],
+      },
     ],
   },
   {

@@ -8,4 +8,6 @@ export enum API {
   USERS = "/users",
   ROLES = "/roles",
   GARDENS = "/gardens",
+  METRIC_ACCEPTATION_RANGES = "/metric-acceptation-ranges",
+  METRIC_TYPES = "/metric-types",
 }

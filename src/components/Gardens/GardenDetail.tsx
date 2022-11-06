@@ -67,12 +67,12 @@ const GardenDetail = () => {
               sectorId: sector.sectorId,
               name: sector.name,
               centralizerKey: sector.centralizerKey,
+              crops: sector.crops,
               gardenId: sector.gardenId,
             };
           }),
         };
-        //   await GardensService.update(id, entity);
-        console.log(entity);
+        await GardensService.update(id, entity);
       } else {
         const entity: GardenAddType = {
           name: values.name,
@@ -83,16 +83,16 @@ const GardenDetail = () => {
               sectorId: sector.sectorId,
               name: sector.name,
               centralizerKey: sector.centralizerKey,
+              crops: sector.crops,
               gardenId: sector.gardenId,
             };
           }),
         };
-        // await GardensService.add(entity);
-        console.log(entity);
+        await GardensService.add(entity);
       }
 
       message.success("Operación exitosa");
-      // navigate(-1);
+      navigate(-1);
     } catch (error) {
       if (error.message) message.error(error.message);
     } finally {
@@ -102,7 +102,6 @@ const GardenDetail = () => {
 
   const handleCopy = async (text: string) => {
     await navigator.clipboard.writeText(text);
-    debugger;
     message.success("Copiado al portapapeles");
   };
 
@@ -175,6 +174,13 @@ const GardenDetail = () => {
                     <Form.Item
                       label="Nombre"
                       name={[name, "name"]}
+                      rules={[{ required: true, message: "Campo obligatorio" }]}
+                    >
+                      <Input />
+                    </Form.Item>
+                    <Form.Item
+                      label="Cultivos"
+                      name={[name, "crops"]}
                       rules={[{ required: true, message: "Campo obligatorio" }]}
                     >
                       <Input />
