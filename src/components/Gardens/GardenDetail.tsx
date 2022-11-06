@@ -72,8 +72,7 @@ const GardenDetail = () => {
             };
           }),
         };
-        //   await GardensService.update(id, entity);
-        console.log(entity);
+        await GardensService.update(id, entity);
       } else {
         const entity: GardenAddType = {
           name: values.name,
@@ -89,12 +88,11 @@ const GardenDetail = () => {
             };
           }),
         };
-        // await GardensService.add(entity);
-        console.log(entity);
+        await GardensService.add(entity);
       }
 
       message.success("Operación exitosa");
-      // navigate(-1);
+      navigate(-1);
     } catch (error) {
       if (error.message) message.error(error.message);
     } finally {
@@ -104,7 +102,6 @@ const GardenDetail = () => {
 
   const handleCopy = async (text: string) => {
     await navigator.clipboard.writeText(text);
-    debugger;
     message.success("Copiado al portapapeles");
   };
 
