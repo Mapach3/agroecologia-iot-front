@@ -67,6 +67,7 @@ const GardenDetail = () => {
               sectorId: sector.sectorId,
               name: sector.name,
               centralizerKey: sector.centralizerKey,
+              crops: sector.crops,
               gardenId: sector.gardenId,
             };
           }),
@@ -83,6 +84,7 @@ const GardenDetail = () => {
               sectorId: sector.sectorId,
               name: sector.name,
               centralizerKey: sector.centralizerKey,
+              crops: sector.crops,
               gardenId: sector.gardenId,
             };
           }),
@@ -175,6 +177,13 @@ const GardenDetail = () => {
                     <Form.Item
                       label="Nombre"
                       name={[name, "name"]}
+                      rules={[{ required: true, message: "Campo obligatorio" }]}
+                    >
+                      <Input />
+                    </Form.Item>
+                    <Form.Item
+                      label="Cultivos"
+                      name={[name, "crops"]}
                       rules={[{ required: true, message: "Campo obligatorio" }]}
                     >
                       <Input />
