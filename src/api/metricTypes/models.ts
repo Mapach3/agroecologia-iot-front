@@ -3,4 +3,4 @@ export interface IMetricType {
   description: string;
 }
 
-export type MetricTypeUpdateType = Pick<IMetricType, "description">;
+export type MetricTypeUpdateType = Pick<IMetricType, "code" | "description">;

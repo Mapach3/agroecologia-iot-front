@@ -33,6 +33,11 @@ export const MenuItems: MenuItem[] = [
         label: "Rangos de métrica",
         roles: [RolesEnum.GARDEN_MANAGER],
       },
+      {
+        key: URLs.METRIC_TYPES,
+        label: "Tipos de métrica",
+        roles: [RolesEnum.GARDEN_MANAGER],
+      },
     ],
   },
   {

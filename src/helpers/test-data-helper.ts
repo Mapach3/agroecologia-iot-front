@@ -1,4 +1,5 @@
 import { IMetricAcceptationRange } from "../api/metricAcceptationRanges/models";
+import { IMetricType } from "../api/metricTypes/models";
 
 export const MetricAcceptationRangesData: IMetricAcceptationRange[] = [
   {
@@ -41,4 +42,10 @@ export const MetricAcceptationRangesData: IMetricAcceptationRange[] = [
     metricTypeCode: "TEMPERATURA_AMBIENTE",
     metricTypeDescription: "Temperatura ambiente",
   },
+];
+
+export const MetricTypesData: IMetricType[] = [
+  { code: "TEMPERATURA_AMBIENTE", description: "Temperatura Ambiente" },
+  { code: "HUMEDAD_SUELO", description: "Humedad del suelo" },
+  { code: "HUMEDAD_AMBIENTE", description: "Humedad Ambiente" },
 ];
