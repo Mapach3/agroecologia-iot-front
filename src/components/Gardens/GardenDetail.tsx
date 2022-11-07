@@ -201,11 +201,11 @@ const GardenDetail = () => {
                       <Input
                         disabled
                         readOnly
-                        addonAfter={
-                          <Tooltip title="Copiar">
-                            <CopyOutlined style={{ cursor: "pointer" }} />
-                          </Tooltip>
-                        }
+                        // addonAfter={
+                        //   <Tooltip title="Copiar">
+                        //     <CopyOutlined style={{ cursor: "pointer" }} />
+                        //   </Tooltip>
+                        // }
                       />
                     </Form.Item>
 

@@ -4,8 +4,14 @@ import { IMetricType, MetricTypeUpdateType } from "./models";
 
 class MetricTypesService {
   static async fetchAll(): Promise<IMetricType[]> {
-    return FetchService.get({
+    return await FetchService.get<IMetricType[]>({
       url: `${API.METRIC_TYPES}/all`,
+    });
+  }
+
+  static async fetchOne(id: string): Promise<IMetricType> {
+    return await FetchService.get<IMetricType>({
+      url: `${API.METRIC_TYPES}/${id}`,
     });
   }
 

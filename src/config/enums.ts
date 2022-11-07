@@ -8,6 +8,7 @@ export enum URLs {
   ROLES = "/roles",
   GARDENS = "/huertas",
   METRIC_ACCEPTATION_RANGES = "/rangos-metricas",
+  METRIC_TYPES = "/tipos-metricas",
   PROFILE = "/perfil",
 
   // Common routes

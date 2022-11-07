@@ -12,6 +12,7 @@ import LogoutPage from "../pages/LogoutPage";
 import PublicRoute from "../components/PublicRoute/PublicRoute";
 import AppLayout from "./AppLayout";
 import MetricAcceptationRangesPage from "../pages/MetricAcceptationRangesPage";
+import MetricTypesPage from "../pages/MetricTypesPage";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -66,6 +67,17 @@ const AppRoutes: React.FC = () => {
             <AppLayout>
               <LoggedInRoute>
                 <MetricAcceptationRangesPage />
+              </LoggedInRoute>
+            </AppLayout>
+          }
+        />
+
+        <Route
+          path={`${URLs.METRIC_TYPES}/*`}
+          element={
+            <AppLayout>
+              <LoggedInRoute>
+                <MetricTypesPage />
               </LoggedInRoute>
             </AppLayout>
           }
