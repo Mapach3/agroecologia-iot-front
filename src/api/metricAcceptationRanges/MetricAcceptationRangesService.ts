@@ -7,6 +7,7 @@ import FetchService from "../shared/FetchService";
 import { PaginatedList } from "../shared/models";
 import {
   IMetricAcceptationRange,
+  IMetricAcceptationRangeGarden,
   MetricAcceptationRangeAddType,
   MetricAcceptationRangeUpdateType,
 } from "./models";
@@ -23,6 +24,12 @@ class MetricAcceptationRangesService {
   static async fetchOne(id: string): Promise<IMetricAcceptationRange> {
     return await FetchService.get<IMetricAcceptationRange>({
       url: `${API.METRIC_ACCEPTATION_RANGES}/${id}`,
+    });
+  }
+
+  static async fetchGardenRanges(): Promise<IMetricAcceptationRangeGarden[]> {
+    return await FetchService.get<IMetricAcceptationRangeGarden[]>({
+      url: `${API.METRIC_ACCEPTATION_RANGES}/garden`,
     });
   }
 

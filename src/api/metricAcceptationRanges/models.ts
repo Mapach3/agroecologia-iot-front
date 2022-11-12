@@ -21,3 +21,10 @@ export type MetricAcceptationRangeUpdateType = Pick<
   | "endValue"
   | "metricTypeCode"
 >;
+
+export interface IMetricAcceptationRangeGarden {
+  metricAcceptationRangeId: number;
+  name: string;
+  metricTypeCode: string;
+  metricTypeDescription: string;
+}

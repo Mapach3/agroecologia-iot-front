@@ -1,4 +1,7 @@
-import { IMetricAcceptationRange } from "../api/metricAcceptationRanges/models";
+import {
+  IMetricAcceptationRange,
+  IMetricAcceptationRangeGarden,
+} from "../api/metricAcceptationRanges/models";
 import { IMetricType } from "../api/metricTypes/models";
 
 export const MetricAcceptationRangesData: IMetricAcceptationRange[] = [
@@ -49,3 +52,67 @@ export const MetricTypesData: IMetricType[] = [
   { code: "HUMEDAD_SUELO", description: "Humedad del suelo" },
   { code: "HUMEDAD_AMBIENTE", description: "Humedad Ambiente" },
 ];
+
+export const MetricAcceptationRangesGardenData: IMetricAcceptationRangeGarden[] =
+  [
+    {
+      metricAcceptationRangeId: 1,
+      name: "Temperatura Ambiente - Calabazas",
+      metricTypeCode: "TEMPERATURA_AMBIENTE",
+      metricTypeDescription: "Temperatura Ambiente",
+    },
+
+    {
+      metricAcceptationRangeId: 2,
+      name: "Humedad suelo calabazas",
+      metricTypeCode: "HUMEDAD_SUELO",
+      metricTypeDescription: "Humedad del Suelo",
+    },
+
+    {
+      metricAcceptationRangeId: 3,
+      name: "Humedad del Ambiente - Calabazas",
+      metricTypeCode: "HUMEDAD_AMBIENTE",
+      metricTypeDescription: "Humedad del Ambiente",
+    },
+    {
+      metricAcceptationRangeId: 4,
+      name: "Temperatura Ambiente - Pernos",
+      metricTypeCode: "TEMPERATURA_AMBIENTE",
+      metricTypeDescription: "Temperatura Ambiente",
+    },
+
+    {
+      metricAcceptationRangeId: 5,
+      name: "Humedad suelo - Frutas tropicales",
+      metricTypeCode: "HUMEDAD_SUELO",
+      metricTypeDescription: "Humedad del Suelo",
+    },
+
+    {
+      metricAcceptationRangeId: 6,
+      name: "Humedad del Ambiente - Agua de coco",
+      metricTypeCode: "HUMEDAD_AMBIENTE",
+      metricTypeDescription: "Humedad del Ambiente",
+    },
+    {
+      metricAcceptationRangeId: 7,
+      name: "Temperatura Ambiente - Bananas",
+      metricTypeCode: "TEMPERATURA_AMBIENTE",
+      metricTypeDescription: "Temperatura Ambiente",
+    },
+
+    {
+      metricAcceptationRangeId: 8,
+      name: "Humedad suelo - Frambuesas",
+      metricTypeCode: "HUMEDAD_SUELO",
+      metricTypeDescription: "Humedad del Suelo",
+    },
+
+    {
+      metricAcceptationRangeId: 9,
+      name: "Humedad del Ambiente - Moras",
+      metricTypeCode: "HUMEDAD_AMBIENTE",
+      metricTypeDescription: "Humedad del Ambiente",
+    },
+  ];
