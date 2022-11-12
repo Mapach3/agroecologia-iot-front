@@ -1,4 +1,4 @@
-import { CopyOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   Button,
   Card,
@@ -9,7 +9,8 @@ import {
   message,
   Popconfirm,
   Row,
-  Tooltip,
+  Select,
+  Tag,
 } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
@@ -23,6 +24,10 @@ import {
 import { ISector } from "../../api/sectors/models";
 import BackButton from "../BackButton/BackButton";
 import cryptoRandomString from "crypto-random-string";
+import { IMetricAcceptationRangeGarden } from "../../api/metricAcceptationRanges/models";
+import { MetricAcceptationRangesGardenData } from "../../helpers/test-data-helper";
+import { groupBy } from "lodash";
+import MetricAcceptationRangesService from "../../api/metricAcceptationRanges/MetricAcceptationRangesService";
 
 interface FormValues {
   name: string;
@@ -53,7 +58,30 @@ const GardenDetail = () => {
     name: "",
   });
 
+  const [metricAcceptationRanges, setMetricAcceptationRanges] = useState<
+    IMetricAcceptationRangeGarden[]
+  >(MetricAcceptationRangesGardenData);
+
   const handleSubmit = async (values: FormValues) => {
+    let invalidSectors: string[] = [];
+
+    values.sectors.forEach((sector) => {
+      let sectorRanges = metricAcceptationRanges.filter((i) =>
+        sector.metricAcceptationRangeIds.includes(i.metricAcceptationRangeId)
+      );
+
+      let groups = Object.values(groupBy(sectorRanges, "metricTypeCode"));
+      if (groups.find((i) => i.length > 1)) invalidSectors.push(sector.name);
+    });
+
+    if (invalidSectors.length) {
+      message.error(
+        `Error. Los rangos de métrica de los siguientes sectores no son válidos: `
+      );
+      invalidSectors.map((is) => message.info(is));
+      return;
+    }
+
     try {
       setIsSubmitting(true);
       if (id) {
@@ -69,6 +97,7 @@ const GardenDetail = () => {
               centralizerKey: sector.centralizerKey,
               crops: sector.crops,
               gardenId: sector.gardenId,
+              metricAcceptationRangeIds: sector.metricAcceptationRangeIds,
             };
           }),
         };
@@ -85,6 +114,7 @@ const GardenDetail = () => {
               centralizerKey: sector.centralizerKey,
               crops: sector.crops,
               gardenId: sector.gardenId,
+              metricAcceptationRangeIds: sector.metricAcceptationRangeIds,
             };
           }),
         };
@@ -120,9 +150,12 @@ const GardenDetail = () => {
 
   useEffect(() => {
     const fetchGarden = async () => {
+      //  setIsLoading(true);
+      // const ranges = await MetricAcceptationRangesService.fetchGardenRanges();
+      // setMetricAcceptationRanges(ranges);
+
       if (id) {
         try {
-          setIsLoading(true);
           const response = await GardensService.fetchOne(id);
           setGarden(response);
         } catch (error) {
@@ -207,6 +240,39 @@ const GardenDetail = () => {
                         //   </Tooltip>
                         // }
                       />
+                    </Form.Item>
+
+                    <Form.Item
+                      label="Rangos de métrica"
+                      name={[name, "metricAcceptationRangeIds"]}
+                      rules={[{ required: true, message: "Campo obligatorio" }]}
+                      extra="Debe seleccionar como máximo un rango para cada tipo de métrica disponible"
+                    >
+                      <Select
+                        placeholder="Seleccione rangos de métrica"
+                        optionFilterProp="children"
+                        mode="multiple"
+                        allowClear
+                      >
+                        {Object.values(
+                          groupBy(metricAcceptationRanges, "metricTypeCode")
+                        ).map((marGroup, index) => (
+                          <Select.OptGroup
+                            label={
+                              <Tag>{marGroup[index].metricTypeDescription}</Tag>
+                            }
+                          >
+                            {marGroup.map((mar) => (
+                              <Select.Option
+                                value={mar.metricAcceptationRangeId}
+                                key={mar.metricAcceptationRangeId}
+                              >
+                                {mar.name}
+                              </Select.Option>
+                            ))}
+                          </Select.OptGroup>
+                        ))}
+                      </Select>
                     </Form.Item>
 
                     <Popconfirm

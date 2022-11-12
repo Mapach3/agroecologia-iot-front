@@ -4,4 +4,5 @@ export interface ISector {
   centralizerKey: string;
   gardenId: number;
   crops: string;
+  metricAcceptationRangeIds: number[];
 }
