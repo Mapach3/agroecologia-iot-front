@@ -16,3 +16,7 @@ export const formatMetricValue = (value: number, metricTypeCode: string) => {
   if (metricTypeCode.includes("HUMEDAD"))
     return `${+value.toFixed(2).replace(/[.,]00$/, "")}`;
 };
+
+export const randomNumber = (min: number, max: number) => {
+  return Math.random() * (max - min) + min;
+};
