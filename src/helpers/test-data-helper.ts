@@ -1,8 +1,14 @@
+import { IGardenBasicInfo } from "../api/gardens/models";
 import {
   IMetricAcceptationRange,
   IMetricAcceptationRangeGarden,
 } from "../api/metricAcceptationRanges/models";
 import { IMetricType } from "../api/metricTypes/models";
+import {
+  ISectorBasicData,
+  ISectorMetricData,
+  ISectorRange,
+} from "../api/sectors/models";
 
 export const MetricAcceptationRangesData: IMetricAcceptationRange[] = [
   {
@@ -116,3 +122,92 @@ export const MetricAcceptationRangesGardenData: IMetricAcceptationRangeGarden[] 
       metricTypeDescription: "Humedad del Ambiente",
     },
   ];
+
+export const SectorRangesTestData: ISectorRange[] = [
+  {
+    metricTypeDescription: "Temperatura Ambiente",
+    metricTypeCode: "TEMPERATURA_AMBIENTE",
+    startValue: 10.1,
+    endValue: 10.9,
+  },
+  {
+    metricTypeDescription: "Humedad del Suelo",
+    metricTypeCode: "HUMEDAD_SUELO",
+    startValue: 18,
+    endValue: 22,
+  },
+  {
+    metricTypeDescription: "Humedad del Ambiente",
+    metricTypeCode: "HUMEDAD_AMBIENTE",
+    startValue: 15.2,
+    endValue: 16.9,
+  },
+];
+
+export const SectorRangesTestData2: ISectorRange[] = [
+  {
+    metricTypeDescription: "Temperatura Ambiente",
+    metricTypeCode: "TEMPERATURA_AMBIENTE",
+    startValue: 1,
+    endValue: 20,
+  },
+  {
+    metricTypeDescription: "Humedad del Suelo",
+    metricTypeCode: "HUMEDAD_SUELO",
+    startValue: 20,
+    endValue: 100,
+  },
+  {
+    metricTypeDescription: "Humedad del Ambiente",
+    metricTypeCode: "HUMEDAD_AMBIENTE",
+    startValue: 25,
+    endValue: 50,
+  },
+];
+
+export const SectorRangesTestData3: ISectorRange[] = [
+  {
+    metricTypeDescription: "Temperatura Ambiente",
+    metricTypeCode: "TEMPERATURA_AMBIENTE",
+    startValue: 20.22,
+    endValue: 10.5,
+  },
+  {
+    metricTypeDescription: "Humedad del Suelo",
+    metricTypeCode: "HUMEDAD_SUELO",
+    startValue: 1,
+    endValue: 50,
+  },
+  {
+    metricTypeDescription: "Humedad del Ambiente",
+    metricTypeCode: "HUMEDAD_AMBIENTE",
+    startValue: 30,
+    endValue: 40,
+  },
+];
+
+export const GardenBasicInfoSectorRangesTestData: ISectorBasicData[] = [
+  {
+    sectorId: 1,
+    sectorName: "Sector de prueba 1",
+    sectorRanges: [...SectorRangesTestData],
+  },
+  {
+    sectorId: 2,
+    sectorName: "Sector de prueba 2",
+    sectorRanges: [...SectorRangesTestData2],
+  },
+  {
+    sectorId: 3,
+    sectorName: "Sector de prueba 3",
+    sectorRanges: [...SectorRangesTestData3],
+  },
+];
+
+export const GardenBasicInfoTestData: IGardenBasicInfo = {
+  gardenId: 1,
+  title: "Huerta de prueba en vivo",
+  description: "Descripción de la huerta de prueba en vivo",
+  location: "29 de Septiembre 1928, Buenos Aires, Argentina",
+  sectorRangesData: GardenBasicInfoSectorRangesTestData,
+};

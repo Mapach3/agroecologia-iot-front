@@ -109,3 +109,9 @@
     width: 100%;
     background-color: rgba(0, 0, 0, 0.1);
 }
+
+.ant-card-meta-title,
+.antd-card-no-ellipsis-title {
+    white-space: pre-line;
+
+}

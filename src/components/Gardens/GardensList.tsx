@@ -83,6 +83,14 @@ const GardensList = () => {
                 name={garden.name}
                 description={garden.description}
                 location={garden.location}
+                handleViewDetails={() =>
+                  navigate(
+                    `${URLs.GARDENS}${URLs.GARDEN_METRICS.replace(
+                      ":id",
+                      garden.gardenId.toString()
+                    )}`
+                  )
+                }
                 handleDelete={() => handleDelete(garden.gardenId.toString())}
                 handleEdit={() =>
                   navigate(

@@ -7,6 +7,7 @@ export enum URLs {
   USERS = "/usuarios",
   ROLES = "/roles",
   GARDENS = "/huertas",
+  GARDEN_METRICS = "/:id/metricas",
   METRIC_ACCEPTATION_RANGES = "/rangos-metricas",
   METRIC_TYPES = "/tipos-metricas",
   PROFILE = "/perfil",
