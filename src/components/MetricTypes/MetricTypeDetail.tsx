@@ -7,6 +7,7 @@ import {
   IMetricType,
   MetricTypeUpdateType,
 } from "../../api/metricTypes/models";
+import ErrorPage from "../../pages/ErrorPage";
 import NotFoundPage from "../../pages/NotFoundPage";
 import BackButton from "../BackButton/BackButton";
 
@@ -68,7 +69,7 @@ const MetricTypeDetail = () => {
     fetchMetricType();
   }, [id]);
 
-  if (error) return <NotFoundPage />;
+  if (error) return <ErrorPage />;
 
   return (
     <div className="container">
@@ -84,10 +85,10 @@ const MetricTypeDetail = () => {
             onFinish={(values: FormValues) => handleSubmit(values)}
             {...formItemLayout}
           >
-            <Form.Item label="Código">
+            <Form.Item name="code" label="Código">
               <Input disabled />
             </Form.Item>
-            <Form.Item label="Descripción">
+            <Form.Item name="description" label="Descripción">
               <Input />
             </Form.Item>
             <Divider />

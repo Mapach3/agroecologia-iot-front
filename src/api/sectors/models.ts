@@ -12,10 +12,10 @@ export interface ISector {
 export interface ISectorBasicData {
   sectorId: number;
   sectorName: string;
-  sectorRanges: ISectorRange[];
+  sectorMetricRanges: ISectorMetricRange[];
 }
 
-export interface ISectorRange {
+export interface ISectorMetricRange {
   startValue: number;
   endValue: number;
   metricTypeCode: string;

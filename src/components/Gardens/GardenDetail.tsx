@@ -28,6 +28,7 @@ import { IMetricAcceptationRangeGarden } from "../../api/metricAcceptationRanges
 import { MetricAcceptationRangesGardenData } from "../../helpers/test-data-helper";
 import { groupBy } from "lodash";
 import MetricAcceptationRangesService from "../../api/metricAcceptationRanges/MetricAcceptationRangesService";
+import ErrorPage from "../../pages/ErrorPage";
 
 interface FormValues {
   name: string;
@@ -47,6 +48,7 @@ const GardenDetail = () => {
   const [form] = useForm<FormValues>();
   const [isLoading, setIsLoading] = useState(!!id);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const [garden, setGarden] = useState<IGarden>({
@@ -60,7 +62,7 @@ const GardenDetail = () => {
 
   const [metricAcceptationRanges, setMetricAcceptationRanges] = useState<
     IMetricAcceptationRangeGarden[]
-  >(MetricAcceptationRangesGardenData);
+  >([]);
 
   const handleSubmit = async (values: FormValues) => {
     let invalidSectors: string[] = [];
@@ -150,23 +152,30 @@ const GardenDetail = () => {
 
   useEffect(() => {
     const fetchGarden = async () => {
-      //  setIsLoading(true);
-      // const ranges = await MetricAcceptationRangesService.fetchGardenRanges();
-      // setMetricAcceptationRanges(ranges);
+      setIsLoading(true);
 
-      if (id) {
-        try {
+      try {
+        const ranges = await MetricAcceptationRangesService.fetchGardenRanges(
+          id ? +id : 0
+        );
+        setMetricAcceptationRanges(ranges);
+        console.log(ranges);
+
+        if (id) {
           const response = await GardensService.fetchOne(id);
           setGarden(response);
-        } catch (error) {
-          if (error.message) message.error(error.message);
-        } finally {
-          setIsLoading(false);
         }
+      } catch (error) {
+        setError(true);
+        if (error.message) message.error(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchGarden();
   }, [id]);
+
+  if (error) return <ErrorPage />;
 
   return (
     <div className="container">
@@ -254,24 +263,34 @@ const GardenDetail = () => {
                         mode="multiple"
                         allowClear
                       >
-                        {Object.values(
-                          groupBy(metricAcceptationRanges, "metricTypeCode")
-                        ).map((marGroup, index) => (
-                          <Select.OptGroup
-                            label={
-                              <Tag>{marGroup[index].metricTypeDescription}</Tag>
-                            }
-                          >
-                            {marGroup.map((mar) => (
-                              <Select.Option
-                                value={mar.metricAcceptationRangeId}
-                                key={mar.metricAcceptationRangeId}
-                              >
-                                {mar.name}
-                              </Select.Option>
-                            ))}
-                          </Select.OptGroup>
-                        ))}
+                        <>
+                          {Object.values(
+                            groupBy(metricAcceptationRanges, "metricTypeCode")
+                          ).map((marGroup, index) =>
+                            console.log(marGroup, index)
+                          )}
+                          {Object.values(
+                            groupBy(metricAcceptationRanges, "metricTypeCode")
+                          ).map((marGroup, index) => (
+                            <Select.OptGroup
+                              key={marGroup.at(index)?.metricTypeCode}
+                              label={
+                                <Tag>
+                                  {marGroup.at(index)?.metricTypeDescription}
+                                </Tag>
+                              }
+                            >
+                              {marGroup.map((mar) => (
+                                <Select.Option
+                                  value={mar.metricAcceptationRangeId}
+                                  key={mar.metricAcceptationRangeId}
+                                >
+                                  {mar.name}
+                                </Select.Option>
+                              ))}
+                            </Select.OptGroup>
+                          ))}
+                        </>
                       </Select>
                     </Form.Item>
 
@@ -316,7 +335,7 @@ const GardenDetail = () => {
             {!!id && (
               <Popconfirm
                 title="¿Eliminar Huerta?"
-                onConfirm={() => handleDelete}
+                onConfirm={() => handleDelete(id)}
                 cancelText="Cancelar"
               >
                 <Button type="primary" danger loading={isSubmitting}>

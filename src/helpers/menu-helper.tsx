@@ -36,7 +36,6 @@ export const MenuItems: MenuItem[] = [
       {
         key: URLs.METRIC_TYPES,
         label: "Tipos de métrica",
-        roles: [RolesEnum.GARDEN_MANAGER],
       },
     ],
   },
@@ -53,12 +52,6 @@ export const renderMenuItemsByRole = (roleCode: string) => {
 };
 
 export const HeaderMenuActions: MenuItem[] = [
-  {
-    key: URLs.PROFILE,
-    icon: <UserOutlined />,
-    label: "Perfil",
-    roles: [RolesEnum.GARDEN_MANAGER, RolesEnum.VISITOR],
-  },
   {
     key: URLs.LOGOUT,
     icon: <LogoutOutlined />,

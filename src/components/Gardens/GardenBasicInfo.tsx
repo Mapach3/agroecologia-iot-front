@@ -11,7 +11,7 @@ interface Props {
 export const GardenBasicInfo: React.FC<Props> = ({ garden }) => {
   return (
     <>
-      <Title level={4}>{garden.title}</Title>
+      <Title level={4}>{garden.name}</Title>
       {garden.description && (
         <Paragraph>
           {<FormOutlined style={{ fontSize: "1.2rem" }} />} {garden.description}

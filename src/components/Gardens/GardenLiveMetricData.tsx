@@ -30,11 +30,11 @@ import SectorMetricsGrid from "./SectorMetricsGrid";
 
 const GardenLiveMetricData = () => {
   const [gardenBasicInfo, setGardenBasicInfo] = useState<IGardenBasicInfo>({
-    title: "",
+    name: "",
     description: "",
     gardenId: 1,
     location: "",
-    sectorRangesData: [],
+    sectorRangesBasicData: [],
   });
 
   const [basicInformationFetched, setBasicInformationFetched] = useState(false);
@@ -208,7 +208,7 @@ const GardenLiveMetricData = () => {
           <>
             <GardenBasicInfo garden={gardenBasicInfo} />
             <Divider>Sectores</Divider>
-            {!gardenBasicInfo.sectorRangesData.length ? (
+            {!gardenBasicInfo.sectorRangesBasicData.length ? (
               <span>La huerta no posee sectores</span>
             ) : (
               <>
@@ -217,7 +217,7 @@ const GardenLiveMetricData = () => {
                   style={{ marginBottom: 15, marginRight: 15 }}
                   onClick={() =>
                     setSectorActiveKeys([
-                      ...gardenBasicInfo.sectorRangesData.map(
+                      ...gardenBasicInfo.sectorRangesBasicData.map(
                         (srd) => srd.sectorId
                       ),
                     ])
@@ -239,7 +239,7 @@ const GardenLiveMetricData = () => {
                     setSectorActiveKeys(activeKeys)
                   }
                 >
-                  {gardenBasicInfo.sectorRangesData.map((sector) => (
+                  {gardenBasicInfo.sectorRangesBasicData.map((sector) => (
                     <CollapsePanel
                       key={sector.sectorId}
                       header={sector.sectorName}
@@ -251,7 +251,7 @@ const GardenLiveMetricData = () => {
                           justifyContent: "center",
                         }}
                       >
-                        {sector.sectorRanges.map((range) => (
+                        {sector.sectorMetricRanges.map((range) => (
                           <React.Fragment key={range.metricTypeCode}>
                             <Col
                               xs={24}

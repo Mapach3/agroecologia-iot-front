@@ -27,9 +27,11 @@ class MetricAcceptationRangesService {
     });
   }
 
-  static async fetchGardenRanges(): Promise<IMetricAcceptationRangeGarden[]> {
+  static async fetchGardenRanges(
+    gardenId: number
+  ): Promise<IMetricAcceptationRangeGarden[]> {
     return await FetchService.get<IMetricAcceptationRangeGarden[]>({
-      url: `${API.METRIC_ACCEPTATION_RANGES}/garden`,
+      url: `${API.METRIC_ACCEPTATION_RANGES}/garden?gardenId=${gardenId}`,
     });
   }
 

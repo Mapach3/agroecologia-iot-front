@@ -7,7 +7,7 @@ import { IMetricType } from "../api/metricTypes/models";
 import {
   ISectorBasicData,
   ISectorMetricData,
-  ISectorRange,
+  ISectorMetricRange,
 } from "../api/sectors/models";
 
 export const MetricAcceptationRangesData: IMetricAcceptationRange[] = [
@@ -69,43 +69,10 @@ export const MetricAcceptationRangesGardenData: IMetricAcceptationRangeGarden[] 
     },
 
     {
-      metricAcceptationRangeId: 2,
-      name: "Humedad suelo calabazas",
-      metricTypeCode: "HUMEDAD_SUELO",
-      metricTypeDescription: "Humedad del Suelo",
-    },
-
-    {
-      metricAcceptationRangeId: 3,
-      name: "Humedad del Ambiente - Calabazas",
-      metricTypeCode: "HUMEDAD_AMBIENTE",
-      metricTypeDescription: "Humedad del Ambiente",
-    },
-    {
-      metricAcceptationRangeId: 4,
-      name: "Temperatura Ambiente - Pernos",
-      metricTypeCode: "TEMPERATURA_AMBIENTE",
-      metricTypeDescription: "Temperatura Ambiente",
-    },
-
-    {
       metricAcceptationRangeId: 5,
       name: "Humedad suelo - Frutas tropicales",
       metricTypeCode: "HUMEDAD_SUELO",
       metricTypeDescription: "Humedad del Suelo",
-    },
-
-    {
-      metricAcceptationRangeId: 6,
-      name: "Humedad del Ambiente - Agua de coco",
-      metricTypeCode: "HUMEDAD_AMBIENTE",
-      metricTypeDescription: "Humedad del Ambiente",
-    },
-    {
-      metricAcceptationRangeId: 7,
-      name: "Temperatura Ambiente - Bananas",
-      metricTypeCode: "TEMPERATURA_AMBIENTE",
-      metricTypeDescription: "Temperatura Ambiente",
     },
 
     {
@@ -114,16 +81,9 @@ export const MetricAcceptationRangesGardenData: IMetricAcceptationRangeGarden[] 
       metricTypeCode: "HUMEDAD_SUELO",
       metricTypeDescription: "Humedad del Suelo",
     },
-
-    {
-      metricAcceptationRangeId: 9,
-      name: "Humedad del Ambiente - Moras",
-      metricTypeCode: "HUMEDAD_AMBIENTE",
-      metricTypeDescription: "Humedad del Ambiente",
-    },
   ];
 
-export const SectorRangesTestData: ISectorRange[] = [
+export const SectorRangesTestData: ISectorMetricRange[] = [
   {
     metricTypeDescription: "Temperatura Ambiente",
     metricTypeCode: "TEMPERATURA_AMBIENTE",
@@ -144,7 +104,7 @@ export const SectorRangesTestData: ISectorRange[] = [
   },
 ];
 
-export const SectorRangesTestData2: ISectorRange[] = [
+export const SectorRangesTestData2: ISectorMetricRange[] = [
   {
     metricTypeDescription: "Temperatura Ambiente",
     metricTypeCode: "TEMPERATURA_AMBIENTE",
@@ -165,7 +125,7 @@ export const SectorRangesTestData2: ISectorRange[] = [
   },
 ];
 
-export const SectorRangesTestData3: ISectorRange[] = [
+export const SectorRangesTestData3: ISectorMetricRange[] = [
   {
     metricTypeDescription: "Temperatura Ambiente",
     metricTypeCode: "TEMPERATURA_AMBIENTE",
@@ -190,24 +150,24 @@ export const GardenBasicInfoSectorRangesTestData: ISectorBasicData[] = [
   {
     sectorId: 1,
     sectorName: "Sector de prueba 1",
-    sectorRanges: [...SectorRangesTestData],
+    sectorMetricRanges: [...SectorRangesTestData],
   },
   {
     sectorId: 2,
     sectorName: "Sector de prueba 2",
-    sectorRanges: [...SectorRangesTestData2],
+    sectorMetricRanges: [...SectorRangesTestData2],
   },
   {
     sectorId: 3,
     sectorName: "Sector de prueba 3",
-    sectorRanges: [...SectorRangesTestData3],
+    sectorMetricRanges: [...SectorRangesTestData3],
   },
 ];
 
 export const GardenBasicInfoTestData: IGardenBasicInfo = {
   gardenId: 1,
-  title: "Huerta de prueba en vivo",
+  name: "Huerta de prueba en vivo",
   description: "Descripción de la huerta de prueba en vivo",
   location: "29 de Septiembre 1928, Buenos Aires, Argentina",
-  sectorRangesData: GardenBasicInfoSectorRangesTestData,
+  sectorRangesBasicData: GardenBasicInfoSectorRangesTestData,
 };

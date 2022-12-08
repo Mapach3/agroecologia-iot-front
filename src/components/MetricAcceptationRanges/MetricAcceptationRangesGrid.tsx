@@ -1,5 +1,6 @@
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Card, message, Popconfirm, Table, Tag, Tooltip } from "antd";
+import { ColumnType } from "antd/lib/table";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MetricAcceptationRangesService from "../../api/metricAcceptationRanges/MetricAcceptationRangesService";
@@ -26,18 +27,82 @@ const MetricAcceptationRangesGrid: React.FC = () => {
   const [rangesFetched, setRangesFetched] = useState<
     PaginatedList<IMetricAcceptationRange>
   >({
-    list: MetricAcceptationRangesData,
-    count: MetricAcceptationRangesData.length,
+    list: [],
+    count: 0,
   });
 
-  const columns = [
-    { title: "Nombre", dataIndex: "name" },
+  const renderActions = (row: IMetricAcceptationRange) => {
+    return (
+      <>
+        <Tooltip title="Editar">
+          <Button
+            style={{ marginRight: 10 }}
+            type="default"
+            icon={<EditOutlined />}
+            onClick={() =>
+              navigate(
+                `${URLs.METRIC_ACCEPTATION_RANGES}${URLs.DETAIL.replace(
+                  ":id",
+                  row.metricAcceptationRangeId.toString()
+                )}`
+              )
+            }
+          />
+        </Tooltip>
+        <Tooltip title="Eliminar">
+          <Popconfirm
+            placement="right"
+            cancelText="Cancelar"
+            title="¿Eliminar Rango de métrica?"
+            onConfirm={() =>
+              handleDelete(row.metricAcceptationRangeId.toString())
+            }
+            cancelButtonProps={{ loading: isLoading }}
+          >
+            <Button danger type="primary" icon={<DeleteOutlined />} />
+          </Popconfirm>
+        </Tooltip>
+      </>
+    );
+  };
+
+  const columns: ColumnType<IMetricAcceptationRange>[] = [
+    {
+      title: "Rangos de métrica",
+      render: (cell: any, row: IMetricAcceptationRange) => (
+        <>
+          <p>
+            <b>Nombre: </b>
+            {row.name}
+          </p>
+          <p>
+            <b>Valores: </b>
+            {formatMetricValueWithUnit(
+              row.startValue,
+              row.metricTypeCode
+            )} a {formatMetricValueWithUnit(row.endValue, row.metricTypeCode)}
+          </p>
+          <p>
+            <b>Fecha de creación: </b>
+            {row.createdAt}
+          </p>
+          <p>
+            <b>Tipo de métrica: </b>
+            <Tag>{row.metricTypeDescription}</Tag>
+          </p>
+          {renderActions(row)}
+        </>
+      ),
+      responsive: ["xs"],
+    },
+    { title: "Nombre", dataIndex: "name", responsive: ["sm"] },
     {
       title: "Valor inicial",
       align: "center" as "center",
       dataIndex: "startValue",
       render: (cell: number, row: IMetricAcceptationRange) =>
         formatMetricValueWithUnit(cell, row.metricTypeCode),
+      responsive: ["sm"],
     },
     {
       title: "Valor final",
@@ -45,52 +110,25 @@ const MetricAcceptationRangesGrid: React.FC = () => {
       dataIndex: "endValue",
       render: (cell: number, row: IMetricAcceptationRange) =>
         formatMetricValueWithUnit(cell, row.metricTypeCode),
+      responsive: ["sm"],
     },
 
     {
       title: "Fecha de creación",
       dataIndex: "createdAt",
+      responsive: ["sm"],
     },
     {
       title: "Tipo de métrica",
       dataIndex: "metricTypeDescription",
       render: (cell: any) => <Tag>{cell}</Tag>,
+      responsive: ["sm"],
     },
     {
       title: "Acciones",
-      width: 120,
-      render: (cell: any, row: IMetricAcceptationRange) => (
-        <>
-          <Tooltip title="Editar">
-            <Button
-              style={{ marginRight: 10 }}
-              type="default"
-              icon={<EditOutlined />}
-              onClick={() =>
-                navigate(
-                  `${URLs.METRIC_ACCEPTATION_RANGES}${URLs.DETAIL.replace(
-                    ":id",
-                    row.metricAcceptationRangeId.toString()
-                  )}`
-                )
-              }
-            />
-          </Tooltip>
-          <Tooltip title="Eliminar">
-            <Popconfirm
-              placement="right"
-              cancelText="Cancelar"
-              title="¿Eliminar Rango de métrica?"
-              onConfirm={() =>
-                handleDelete(row.metricAcceptationRangeId.toString())
-              }
-              cancelButtonProps={{ loading: isLoading }}
-            >
-              <Button danger type="primary" icon={<DeleteOutlined />} />
-            </Popconfirm>
-          </Tooltip>
-        </>
-      ),
+      render: (cell: any, row: IMetricAcceptationRange) => renderActions(row),
+
+      responsive: ["sm"],
     },
   ];
 
@@ -152,7 +190,7 @@ const MetricAcceptationRangesGrid: React.FC = () => {
           columns={columns}
           bordered
           pagination={{ pageSize: ROWS_PER_PAGE, hideOnSinglePage: true }}
-          scroll={{ x: 1024 }}
+          scroll={{ x: "max-content" }}
         />
       </Card>
     </div>

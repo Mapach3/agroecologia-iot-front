@@ -1,10 +1,10 @@
 import { Progress } from "antd";
 import { IMetricReadingDTO } from "../../api/metricReadings/models";
-import { ISectorRange } from "../../api/sectors/models";
+import { ISectorMetricRange } from "../../api/sectors/models";
 import { formatMetricValueWithUnit } from "../../helpers/metric-helper";
 
 interface Props {
-  sectorRange: ISectorRange;
+  sectorRange: ISectorMetricRange;
   currentReading?: IMetricReadingDTO;
 }
 

@@ -22,8 +22,8 @@ export type GardenUpdateType = Pick<
 
 export interface IGardenBasicInfo {
   gardenId: number;
-  title: string;
+  name: string;
   description: string;
   location: string;
-  sectorRangesData: ISectorBasicData[];
+  sectorRangesBasicData: ISectorBasicData[];
 }
