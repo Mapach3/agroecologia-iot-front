@@ -6,6 +6,7 @@ import { useParams } from "react-router";
 import GardensService from "../../api/gardens/GardensService";
 import { IGardenBasicInfo } from "../../api/gardens/models";
 import { ISectorMetricData } from "../../api/sectors/models";
+import { READING_FETCH_WAIT_TIME } from "../../config/general-config";
 import { GardenBasicInfoTestData } from "../../helpers/test-data-helper";
 import ErrorPage from "../../pages/ErrorPage";
 import BackButton from "../BackButton/BackButton";
@@ -58,7 +59,7 @@ const GardenLiveMetricData = () => {
     setBasicInformationFetched(true);
   }, []);
 
-  // //Initial fetch: only one time, when the view is rendered.
+  // //Initial fetch: only once, when the view is rendered
   useEffect(() => {
     const fetchGardenBasicInfo = async () => {
       try {
@@ -78,7 +79,7 @@ const GardenLiveMetricData = () => {
     fetchGardenBasicInfo();
   }, [id]);
 
-  //Continous fetch: after basic info is loaded and then every x seconds
+  //Continous fetch: after basic info is loaded and then every x seconds based in config
   useEffect(() => {
     const fetchSectorsMetricData = async () => {
       if (!error && basicInformationFetched) {
@@ -91,10 +92,11 @@ const GardenLiveMetricData = () => {
       }
     };
 
-    const interval = setInterval(() => {
+    //Interval to handle continous fetching of metric readings
+    const readingFetchInterval = setInterval(() => {
       fetchSectorsMetricData();
-    }, 5000);
-    return () => clearInterval(interval);
+    }, READING_FETCH_WAIT_TIME);
+    return () => clearInterval(readingFetchInterval);
   }, [error, id, basicInformationFetched]);
 
   if (error) return <ErrorPage />;
