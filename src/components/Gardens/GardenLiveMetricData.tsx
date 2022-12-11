@@ -1,26 +1,11 @@
-import {
-  Button,
-  Card,
-  Col,
-  Collapse,
-  Descriptions,
-  Divider,
-  message,
-  Progress,
-  Row,
-  Spin,
-  Switch,
-} from "antd";
+import { Button, Card, Col, Collapse, Divider, message, Row, Spin } from "antd";
 import CollapsePanel from "antd/lib/collapse/CollapsePanel";
-import { DateTime } from "luxon";
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import GardensService from "../../api/gardens/GardensService";
 import { IGardenBasicInfo } from "../../api/gardens/models";
 import { ISectorMetricData } from "../../api/sectors/models";
-import { dateFormat } from "../../helpers/date-helper";
-import { randomNumber } from "../../helpers/metric-helper";
 import { GardenBasicInfoTestData } from "../../helpers/test-data-helper";
 import ErrorPage from "../../pages/ErrorPage";
 import BackButton from "../BackButton/BackButton";
@@ -32,7 +17,7 @@ const GardenLiveMetricData = () => {
   const [gardenBasicInfo, setGardenBasicInfo] = useState<IGardenBasicInfo>({
     name: "",
     description: "",
-    gardenId: 1,
+    gardenId: 0,
     location: "",
     sectorRangesBasicData: [],
   });
@@ -74,118 +59,35 @@ const GardenLiveMetricData = () => {
   }, []);
 
   // //Initial fetch: only one time, when the view is rendered.
-  // useEffect(() => {
-  //   const fetchGardenBasicInfo = async () => {
-  //     try {
-  //       if (id) {
-  //         setIsLoading(true);
-  //         const response = await GardensService.fetchGardenBasicInfo(id);
-  //         setGardenBasicInfo(response);
-  //       }
-  //     } catch (error) {
-  //       setError(true);
-  //       if (error.message) message.error(error.message);
-  //     } finally {
-  //     }
-  //   };
-  //   fetchGardenBasicInfo();
-  // }, [id]);
+  useEffect(() => {
+    const fetchGardenBasicInfo = async () => {
+      try {
+        if (id) {
+          setIsLoading(true);
+          const response = await GardensService.fetchGardenBasicInfo(id);
+          setGardenBasicInfo(response);
+          setBasicInformationFetched(true);
+        }
+      } catch (error) {
+        setError(true);
+        if (error.message) message.error(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchGardenBasicInfo();
+  }, [id]);
 
   //Continous fetch: after basic info is loaded and then every x seconds
   useEffect(() => {
     const fetchSectorsMetricData = async () => {
       if (!error && basicInformationFetched) {
-        const TestData: ISectorMetricData[] = [
-          {
-            sectorId: 1,
-            sectorName: "Sector de Prueba",
-            readings: [
-              {
-                metricReadingId: 1,
-                readingDate: DateTime.now().toFormat(dateFormat),
-                value: randomNumber(10.25, 50.2).toString(),
-                valueType: "string",
-                metricTypeCode: "TEMPERATURA_AMBIENTE",
-                metricTypeDescription: "Temperatura Ambiente",
-                isCurrentReading: true,
-              },
-              {
-                metricReadingId: 2,
-                readingDate: DateTime.now().toFormat(dateFormat),
-                value: randomNumber(10.25, 20.1).toString(),
-                valueType: "string",
-                metricTypeCode: "HUMEDAD_SUELO",
-                metricTypeDescription: "Humedad del suelo",
-                isCurrentReading: true,
-              },
-              {
-                metricReadingId: 3,
-                readingDate: DateTime.now().toFormat(dateFormat),
-                value: randomNumber(1.8, 12.2).toString(),
-                valueType: "string",
-                metricTypeCode: "HUMEDAD_AMBIENTE",
-                metricTypeDescription: "Humedad del Ambiente",
-                isCurrentReading: true,
-              },
-              {
-                metricReadingId: 4,
-                readingDate: DateTime.now().toFormat(dateFormat),
-                value: randomNumber(1.8, 12.2).toString(),
-                valueType: "string",
-                metricTypeCode: "HUMEDAD_AMBIENTE",
-                metricTypeDescription: "Humedad del Ambiente",
-                isCurrentReading: false,
-              },
-              {
-                metricReadingId: 5,
-                readingDate: DateTime.now().toFormat(dateFormat),
-                value: randomNumber(1.8, 12.2).toString(),
-                valueType: "string",
-                metricTypeCode: "HUMEDAD_AMBIENTE",
-                metricTypeDescription: "Humedad del Ambiente",
-                isCurrentReading: false,
-              },
-            ],
-          },
-          {
-            sectorId: 2,
-            sectorName: "Sector de prueba 2",
-            readings: [
-              {
-                metricReadingId: 7,
-                readingDate: DateTime.now().toFormat(dateFormat),
-                value: randomNumber(10.25, 50.2).toString(),
-                valueType: "string",
-                metricTypeCode: "TEMPERATURA_AMBIENTE",
-                metricTypeDescription: "Temperatura Ambiente",
-                isCurrentReading: true,
-              },
-              {
-                metricReadingId: 8,
-                readingDate: DateTime.now().toFormat(dateFormat),
-                value: randomNumber(10.25, 20.1).toString(),
-                valueType: "string",
-                metricTypeCode: "HUMEDAD_SUELO",
-                metricTypeDescription: "Humedad del suelo",
-                isCurrentReading: true,
-              },
-              {
-                metricReadingId: 9,
-                readingDate: DateTime.now().toFormat(dateFormat),
-                value: randomNumber(1.8, 12.2).toString(),
-                valueType: "string",
-                metricTypeCode: "HUMEDAD_AMBIENTE",
-                metricTypeDescription: "Humedad del Ambiente",
-                isCurrentReading: true,
-              },
-            ],
-          },
-          { sectorId: 3, sectorName: "Sector de prueba 3", readings: [] },
-        ];
-
-        // const response = await GardensService.fetchSectorsMetricData(id!);
-        // setSectorsMetricData(response);
-        setSectorsMetricData(TestData);
+        try {
+          const response = await GardensService.fetchSectorsMetricData(id!);
+          setSectorsMetricData(response);
+        } catch (error) {
+          if (error.message) message.error(error.message);
+        }
       }
     };
 
@@ -240,10 +142,7 @@ const GardenLiveMetricData = () => {
                   }
                 >
                   {gardenBasicInfo.sectorRangesBasicData.map((sector) => (
-                    <CollapsePanel
-                      key={sector.sectorId}
-                      header={sector.sectorName}
-                    >
+                    <CollapsePanel key={sector.sectorId} header={sector.name}>
                       <Row
                         gutter={16}
                         style={{

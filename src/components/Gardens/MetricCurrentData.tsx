@@ -1,4 +1,4 @@
-import { Progress } from "antd";
+import { Progress, Tooltip } from "antd";
 import { IMetricReadingDTO } from "../../api/metricReadings/models";
 import { ISectorMetricRange } from "../../api/sectors/models";
 import { formatMetricValueWithUnit } from "../../helpers/metric-helper";
@@ -26,15 +26,37 @@ const MetricCurrentData: React.FC<Props> = ({
         alignItems: "center",
       }}
     >
-      <Progress
-        type="dashboard"
-        style={{ display: "flex" }}
-        percent={currentReading ? +currentReading.value : 0}
-        status={getProgressStatus(currentReading ? +currentReading.value : 0)}
-        format={(percent) =>
-          formatMetricValueWithUnit(percent!, sectorRange.metricTypeCode)
+      <Tooltip
+        title={
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <span>{sectorRange.name}</span>
+            <span>
+              Valor inicial:{" "}
+              {formatMetricValueWithUnit(
+                sectorRange.startValue,
+                sectorRange.metricTypeCode
+              )}
+            </span>
+            <span>
+              Valor final:{" "}
+              {formatMetricValueWithUnit(
+                sectorRange.endValue,
+                sectorRange.metricTypeCode
+              )}
+            </span>
+          </div>
         }
-      />
+      >
+        <Progress
+          type="dashboard"
+          style={{ display: "flex" }}
+          percent={currentReading ? +currentReading.value : 0}
+          status={getProgressStatus(currentReading ? +currentReading.value : 0)}
+          format={(percent) =>
+            formatMetricValueWithUnit(percent!, sectorRange.metricTypeCode)
+          }
+        />
+      </Tooltip>
       <span style={{ color: "#909090", textAlign: "center" }}>
         {sectorRange.metricTypeDescription}
       </span>
