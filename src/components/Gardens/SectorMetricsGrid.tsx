@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Table, Tag } from "antd";
 import { ColumnType } from "antd/lib/table";
 import { IMetricReadingDTO } from "../../api/metricReadings/models";
 import { formatISODate } from "../../helpers/date-helper";
@@ -18,8 +18,12 @@ const SectorMetricsGrid: React.FC<Props> = ({ readings }) => {
     {
       title: "Valor",
       dataIndex: "value",
-      render: (cell: any, row: IMetricReadingDTO) =>
-        formatMetricValueWithUnit(+row.value, row.metricTypeCode),
+      render: (cell: any, row: IMetricReadingDTO) => (
+        <>
+          {formatMetricValueWithUnit(+row.value, row.metricTypeCode)}{" "}
+          {row.isCurrentReading && <Tag style={{ marginLeft: 5 }}>Actual</Tag>}
+        </>
+      ),
       responsive: ["sm", "md"],
     },
     {
@@ -33,7 +37,12 @@ const SectorMetricsGrid: React.FC<Props> = ({ readings }) => {
       render: (cell: any, row: IMetricReadingDTO) => (
         <>
           <p>{row.metricTypeDescription}</p>
-          <p>{formatMetricValueWithUnit(+row.value, row.metricTypeCode)}</p>
+          <p>
+            {formatMetricValueWithUnit(+row.value, row.metricTypeCode)}{" "}
+            {row.isCurrentReading && (
+              <Tag style={{ marginLeft: 5 }}>Actual</Tag>
+            )}
+          </p>
           <p>{formatISODate(row.readingDate)}</p>
         </>
       ),

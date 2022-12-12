@@ -82,7 +82,11 @@ const GardenLiveMetricData = () => {
   //Continous fetch: after basic info is loaded and then every x seconds based in config
   useEffect(() => {
     const fetchSectorsMetricData = async () => {
-      if (!error && basicInformationFetched) {
+      if (
+        !error &&
+        basicInformationFetched &&
+        gardenBasicInfo.sectorRangesBasicData.length > 0
+      ) {
         try {
           const response = await GardensService.fetchSectorsMetricData(id!);
           setSectorsMetricData(response);
@@ -97,7 +101,7 @@ const GardenLiveMetricData = () => {
       fetchSectorsMetricData();
     }, READING_FETCH_WAIT_TIME);
     return () => clearInterval(readingFetchInterval);
-  }, [error, id, basicInformationFetched]);
+  }, [error, id, basicInformationFetched, gardenBasicInfo]);
 
   if (error) return <ErrorPage />;
 
