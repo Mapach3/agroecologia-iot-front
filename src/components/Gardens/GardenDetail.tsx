@@ -25,8 +25,7 @@ import { ISector } from "../../api/sectors/models";
 import BackButton from "../BackButton/BackButton";
 import cryptoRandomString from "crypto-random-string";
 import { IMetricAcceptationRangeGarden } from "../../api/metricAcceptationRanges/models";
-import { MetricAcceptationRangesGardenData } from "../../helpers/test-data-helper";
-import { groupBy } from "lodash";
+import { first, groupBy } from "lodash";
 import MetricAcceptationRangesService from "../../api/metricAcceptationRanges/MetricAcceptationRangesService";
 import ErrorPage from "../../pages/ErrorPage";
 
@@ -132,10 +131,10 @@ const GardenDetail = () => {
     }
   };
 
-  const handleCopy = async (text: string) => {
-    await navigator.clipboard.writeText(text);
-    message.success("Copiado al portapapeles");
-  };
+  // const handleCopy = async (text: string) => {
+  //   await navigator.clipboard.writeText(text);
+  //   message.success("Copiado al portapapeles");
+  // };
 
   const handleDelete = async (id: string) => {
     try {
@@ -159,7 +158,6 @@ const GardenDetail = () => {
           id ? +id : 0
         );
         setMetricAcceptationRanges(ranges);
-        console.log(ranges);
 
         if (id) {
           const response = await GardensService.fetchOne(id);
@@ -262,36 +260,26 @@ const GardenDetail = () => {
                         optionFilterProp="children"
                         mode="multiple"
                         allowClear
-                      >
-                        <>
-                          {Object.values(
-                            groupBy(metricAcceptationRanges, "metricTypeCode")
-                          ).map((marGroup, index) =>
-                            console.log(marGroup, index)
-                          )}
-                          {Object.values(
-                            groupBy(metricAcceptationRanges, "metricTypeCode")
-                          ).map((marGroup, index) => (
-                            <Select.OptGroup
-                              key={marGroup.at(index)?.metricTypeCode}
-                              label={
-                                <Tag>
-                                  {marGroup.at(index)?.metricTypeDescription}
-                                </Tag>
-                              }
-                            >
-                              {marGroup.map((mar) => (
-                                <Select.Option
-                                  value={mar.metricAcceptationRangeId}
-                                  key={mar.metricAcceptationRangeId}
-                                >
-                                  {mar.name}
-                                </Select.Option>
-                              ))}
-                            </Select.OptGroup>
-                          ))}
-                        </>
-                      </Select>
+                        options={Object.values(
+                          groupBy(metricAcceptationRanges, "metricTypeCode")
+                        ).map((marGroup) => {
+                          return {
+                            label: first(marGroup) && (
+                              <Tag>
+                                {first(marGroup)!.metricTypeDescription}
+                              </Tag>
+                            ),
+                            options: [
+                              ...marGroup.map((mar) => {
+                                return {
+                                  label: mar.name,
+                                  value: mar.metricAcceptationRangeId,
+                                };
+                              }),
+                            ],
+                          };
+                        })}
+                      />
                     </Form.Item>
 
                     <Popconfirm

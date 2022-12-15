@@ -60,6 +60,11 @@ const MetricAcceptationRangeDetail: React.FC = () => {
 
   const handleSubmit = async (values: FormValues) => {
     try {
+      if (values.startValue > values.endValue)
+        return message.error(
+          "El valor inicial no puede ser mayor que el valor final"
+        );
+
       setIsSubmitting(true);
       if (id) {
         const entity: MetricAcceptationRangeUpdateType = {
@@ -179,6 +184,7 @@ const MetricAcceptationRangeDetail: React.FC = () => {
               <Select
                 placeholder="Seleccione tipo de métrica"
                 optionFilterProp="children"
+                disabled={!!id}
               >
                 {metricTypes.map((mt) => (
                   <Select.Option value={mt.code}>
