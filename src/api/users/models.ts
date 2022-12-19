@@ -7,7 +7,7 @@ export interface IUser {
   username: string;
   password: string;
   email: string;
-  createdDate?: string;
+  createdAt?: string;
 }
 
 export type UserAddType = Pick<

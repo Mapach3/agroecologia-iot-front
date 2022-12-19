@@ -1,4 +1,4 @@
-import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { LogoutOutlined } from "@ant-design/icons";
 import { RolesEnum } from "../api/roles/enum";
 import { URLs } from "../config/enums";
 
@@ -16,8 +16,8 @@ export const MenuItems: MenuItem[] = [
     label: "Dashboard",
     roles: [RolesEnum.GARDEN_MANAGER, RolesEnum.VISITOR],
   },
-  { key: URLs.USERS, label: "Usuarios", roles: [RolesEnum.ADMIN] },
-  { key: URLs.ROLES, label: "Roles", roles: [RolesEnum.ADMIN] },
+  { key: URLs.USERS, label: "Usuarios" },
+  { key: URLs.ROLES, label: "Roles" },
   {
     key: "gardens-submenu",
     label: "Gestión de Huertas",
@@ -36,7 +36,6 @@ export const MenuItems: MenuItem[] = [
       {
         key: URLs.METRIC_TYPES,
         label: "Tipos de métrica",
-        roles: [RolesEnum.GARDEN_MANAGER],
       },
     ],
   },
@@ -49,16 +48,26 @@ export const MenuItems: MenuItem[] = [
 
 export const renderMenuItemsByRole = (roleCode: string) => {
   if (roleCode === RolesEnum.ADMIN) return MenuItems;
-  return MenuItems.filter((i) => i.roles?.find((i) => i === roleCode));
+
+  var itemsByRole = MenuItems.filter((item) =>
+    checkRoleAccessToMenuItem(item, roleCode)
+  );
+
+  itemsByRole.forEach((item) => {
+    if (item.children)
+      item.children = item.children.filter((subItem) =>
+        checkRoleAccessToMenuItem(subItem, roleCode)
+      );
+  });
+
+  return itemsByRole;
+};
+
+const checkRoleAccessToMenuItem = (item: MenuItem, roleCode: string) => {
+  return item.roles?.find((itemRole) => itemRole === roleCode);
 };
 
 export const HeaderMenuActions: MenuItem[] = [
-  {
-    key: URLs.PROFILE,
-    icon: <UserOutlined />,
-    label: "Perfil",
-    roles: [RolesEnum.GARDEN_MANAGER, RolesEnum.VISITOR],
-  },
   {
     key: URLs.LOGOUT,
     icon: <LogoutOutlined />,

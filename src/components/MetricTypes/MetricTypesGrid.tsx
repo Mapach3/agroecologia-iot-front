@@ -6,12 +6,10 @@ import MetricTypesService from "../../api/metricTypes/MetricTypesService";
 import { IMetricType } from "../../api/metricTypes/models";
 import { URLs } from "../../config/enums";
 import { ROWS_PER_PAGE } from "../../helpers/grid-helper";
-import { MetricTypesData } from "../../helpers/test-data-helper";
 
 const MetricTypesGrid = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [metricTypes, setMetricTypes] =
-    useState<IMetricType[]>(MetricTypesData);
+  const [metricTypes, setMetricTypes] = useState<IMetricType[]>([]);
   const navigate = useNavigate();
 
   const columns = [
@@ -66,7 +64,7 @@ const MetricTypesGrid = () => {
           bordered
           dataSource={metricTypes}
           pagination={{ pageSize: ROWS_PER_PAGE, hideOnSinglePage: true }}
-          scroll={{ x: 220 }}
+          scroll={{ x: 110 }}
         />
       </Card>
     </div>

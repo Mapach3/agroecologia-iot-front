@@ -22,6 +22,7 @@ import {
 import MetricTypesService from "../../api/metricTypes/MetricTypesService";
 import { IMetricType } from "../../api/metricTypes/models";
 import { formatMetricValue } from "../../helpers/metric-helper";
+import ErrorPage from "../../pages/ErrorPage";
 import BackButton from "../BackButton/BackButton";
 
 interface FormValues {
@@ -37,12 +38,14 @@ const formItemLayout = {
 };
 
 const MetricAcceptationRangeDetail: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { id } = useParams<{ id: string }>();
+
+  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(false);
 
   const [form] = useForm<FormValues>();
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
 
   const [metricTypes, setMetricTypes] = useState<IMetricType[]>([]);
 
@@ -57,6 +60,11 @@ const MetricAcceptationRangeDetail: React.FC = () => {
 
   const handleSubmit = async (values: FormValues) => {
     try {
+      if (values.startValue > values.endValue)
+        return message.error(
+          "El valor inicial no puede ser mayor que el valor final"
+        );
+
       setIsSubmitting(true);
       if (id) {
         const entity: MetricAcceptationRangeUpdateType = {
@@ -118,6 +126,7 @@ const MetricAcceptationRangeDetail: React.FC = () => {
           setMetricAcceptationRange(metricAcceptationRange);
         }
       } catch (error) {
+        setError(true);
         if (error.message) message.error(error.message);
       } finally {
         setIsLoading(false);
@@ -125,6 +134,8 @@ const MetricAcceptationRangeDetail: React.FC = () => {
     };
     fetch();
   }, [id]);
+
+  if (error) return <ErrorPage />;
 
   return (
     <div className="container">
@@ -173,6 +184,7 @@ const MetricAcceptationRangeDetail: React.FC = () => {
               <Select
                 placeholder="Seleccione tipo de métrica"
                 optionFilterProp="children"
+                disabled={!!id}
               >
                 {metricTypes.map((mt) => (
                   <Select.Option value={mt.code}>

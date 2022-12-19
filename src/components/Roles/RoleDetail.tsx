@@ -18,7 +18,7 @@ import RolesService from "../../api/roles/RolesService";
 import { IUser } from "../../api/users/models";
 import UsersService from "../../api/users/UsersService";
 import { URLs } from "../../config/enums";
-import NotFoundPage from "../../pages/NotFoundPage";
+import ErrorPage from "../../pages/ErrorPage";
 import BackButton from "../BackButton/BackButton";
 
 interface Props {}
@@ -86,7 +86,7 @@ const RoleDetail: React.FC<Props> = () => {
     fetchRole();
   }, [id]);
 
-  if (error) return <NotFoundPage />;
+  if (error) return <ErrorPage />;
 
   return (
     <div className="container">

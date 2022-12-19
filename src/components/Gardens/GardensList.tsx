@@ -7,10 +7,12 @@ import { IGarden } from "../../api/gardens/models";
 import { PaginatedList } from "../../api/shared/models";
 import { URLs } from "../../config/enums";
 import { createBaseGridParams, ROWS_PER_PAGE } from "../../helpers/grid-helper";
+import ErrorPage from "../../pages/ErrorPage";
 import GardenInfoCard from "./GardenInfoCard";
 
 const GardensList = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<boolean>(false);
   const [fetchedGardens, setFetchedGardens] = useState<PaginatedList<IGarden>>({
     list: [],
     count: 0,
@@ -28,6 +30,7 @@ const GardensList = () => {
       message.success("Operación exitosa");
       setGridState({ ...gridState });
     } catch (error) {
+      setError(true);
       if (error.message) message.error(error.message);
     } finally {
       setIsLoading(false);
@@ -49,6 +52,8 @@ const GardensList = () => {
 
     fetchGardens();
   }, [gridState]);
+
+  if (error) return <ErrorPage />;
 
   return (
     <div className="container">
@@ -83,6 +88,14 @@ const GardensList = () => {
                 name={garden.name}
                 description={garden.description}
                 location={garden.location}
+                handleViewDetails={() =>
+                  navigate(
+                    `${URLs.GARDENS}${URLs.GARDEN_METRICS.replace(
+                      ":id",
+                      garden.gardenId.toString()
+                    )}`
+                  )
+                }
                 handleDelete={() => handleDelete(garden.gardenId.toString())}
                 handleEdit={() =>
                   navigate(

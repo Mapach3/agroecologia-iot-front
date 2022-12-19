@@ -1,9 +1,11 @@
 import {
   DeleteFilled,
   EditOutlined,
+  EnvironmentOutlined,
   FileTextOutlined,
+  FormOutlined,
 } from "@ant-design/icons";
-import { Card, Popconfirm, Tooltip, Typography } from "antd";
+import { Card, Popconfirm, Tooltip } from "antd";
 import Meta from "antd/lib/card/Meta";
 import gardenPlaceholder from "../../assets/ef3-placeholder-image.jpg";
 
@@ -57,10 +59,15 @@ const GardenInfoCard: React.FC<Props> = ({
     >
       <Meta
         title={name}
+        className="ant-card-no-ellipsis-title"
         description={
           <>
-            <p style={{ marginBottom: 5 }}>{description}</p>
-            <p style={{ marginBottom: 5 }}>{location}</p>
+            <p style={{ marginBottom: 5 }}>
+              {<FormOutlined />} {description}
+            </p>
+            <p style={{ marginBottom: 5 }}>
+              {<EnvironmentOutlined />} {location}
+            </p>
           </>
         }
       />
