@@ -7,7 +7,6 @@ import GardensService from "../../api/gardens/GardensService";
 import { IGardenBasicInfo } from "../../api/gardens/models";
 import { ISectorMetricData } from "../../api/sectors/models";
 import { READING_FETCH_WAIT_TIME } from "../../config/general-config";
-import { GardenBasicInfoTestData } from "../../helpers/test-data-helper";
 import ErrorPage from "../../pages/ErrorPage";
 import BackButton from "../BackButton/BackButton";
 import { GardenBasicInfo } from "./GardenBasicInfo";
@@ -54,12 +53,7 @@ const GardenLiveMetricData = () => {
       : [];
   };
 
-  useEffect(() => {
-    setGardenBasicInfo(GardenBasicInfoTestData);
-    setBasicInformationFetched(true);
-  }, []);
-
-  // //Initial fetch: only once, when the view is rendered
+  //Initial fetch: only once, when the view is rendered
   useEffect(() => {
     const fetchGardenBasicInfo = async () => {
       try {
